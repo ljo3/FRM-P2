@@ -1,5 +1,7 @@
 {
-  "market-risk": [],
+  "market-risk": [
+    { "lesson": 1, "title": "Estimating Market Risk Measures: An Introduction and Overview", "file": "data/market-risk/lesson1.json" }
+  ],
   "credit-risk": [],
   "operational-risk": [],
   "liquidity-treasury": [],

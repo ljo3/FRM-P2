@@ -1,0 +1,197 @@
+{
+  "topic": "market-risk",
+  "lesson": 1,
+  "title": "Estimating Market Risk Measures: An Introduction and Overview",
+  "flashcards": [
+    {
+      "front": "What does VaR measure?",
+      "back": "The loss threshold that should not be exceeded at a given confidence level over a given horizon — e.g., a 95% VaR of $1 million means there is roughly a 5% chance of losing more than $1 million."
+    },
+    {
+      "front": "How is VaR estimated using historical simulation?",
+      "back": "Order historical P/L (or return) observations from worst loss to best gain, and read VaR off as approximately the (α × n)th worst observation — no distributional assumption is required."
+    },
+    {
+      "front": "What is the key advantage of historical simulation over parametric VaR?",
+      "back": "It makes no assumption about the shape of the return distribution, so it automatically reflects any skewness or fat tails present in the actual data."
+    },
+    {
+      "front": "What is the main limitation of historical simulation?",
+      "back": "It is backward-looking: it assumes the future return-generating process resembles the historical sample, and cannot adjust for regime shifts or changing volatility until enough new data accumulates."
+    },
+    {
+      "front": "Write the normal VaR formula using P/L data.",
+      "back": "VaR(α%) = −μ_(P/L) + σ_(P/L) × z_α"
+    },
+    {
+      "front": "Write the lognormal VaR formula.",
+      "back": "VaR(α%) = P_(t−1) × (1 − e^(μ_R − σ_R × z_α)), where μ_R and σ_R are the mean and standard deviation of geometric returns."
+    },
+    {
+      "front": "Why is the lognormal distribution often used to model asset prices instead of the normal distribution?",
+      "back": "The lognormal distribution is bounded below by zero, so it cannot imply a negative asset price, whereas the normal distribution can."
+    },
+    {
+      "front": "What does expected shortfall (ES) measure that VaR does not?",
+      "back": "ES estimates the average loss given that the loss exceeds the VaR threshold — i.e., the severity of losses inside the tail, not just the boundary of the tail."
+    },
+    {
+      "front": "How is ES estimated from a series of VaR figures?",
+      "back": "Slice the tail into n − 1 equal probability bands, compute the VaR at the confidence level corresponding to each slice boundary, and average those VaR figures."
+    },
+    {
+      "front": "What is a coherent risk measure?",
+      "back": "A weighted average of quantiles taken across the entire loss distribution, with weights set according to the risk manager's own risk aversion. VaR and ES are both special cases."
+    },
+    {
+      "front": "How does ES fit into the coherent risk measure framework?",
+      "back": "ES is the special case of a coherent risk measure where all the weight is concentrated on tail quantiles (weight = 1 / (1 − confidence level) in the tail, zero elsewhere)."
+    },
+    {
+      "front": "How does a general coherent risk measure's sensitivity to the number of slices n compare to ES?",
+      "back": "A general coherent risk measure is more sensitive to n than ES is, because increasing n pushes quantile boundaries further into both tails of the distribution — though both converge to their true values as n grows large."
+    },
+    {
+      "front": "What is the formula for the standard error of a quantile estimate?",
+      "back": "se(q) = √(p(1 − p) / n) / f(q), where p is the probability mass in a bin around q, n is the sample size, and f(q) is the density at q."
+    },
+    {
+      "front": "How does increasing the sample size n affect the standard error of a VaR estimate, holding p and the bin width fixed?",
+      "back": "A larger sample size n reduces the standard error, narrowing the confidence interval around the VaR estimate."
+    },
+    {
+      "front": "What does a QQ plot show?",
+      "back": "A scatter plot comparing the quantiles of an empirical distribution to the quantiles of a theoretical reference distribution (e.g., the normal); a straight 45° line indicates a good fit."
+    },
+    {
+      "front": "If a QQ plot's points match the 45° line near the center but bend away from it in the tails, what can you conclude?",
+      "back": "The empirical distribution is roughly symmetric like the reference distribution (since the centers match), but has tails that differ — either fatter or thinner — from the reference distribution's tails."
+    }
+  ],
+  "questions": [
+    {
+      "q": "A risk manager has 250 daily P/L observations and wants the 98% VaR using historical simulation (using the α × n convention). Which ordered loss observation should be used?",
+      "choices": ["The 5th worst loss", "The 2nd worst loss", "The 25th worst loss", "The 50th worst loss"],
+      "answer": 0,
+      "explanation": "α × n = 2% × 250 = 5, so the 5th worst loss (counting from the largest loss) approximates the 98% VaR."
+    },
+    {
+      "q": "A portfolio's annual P/L is normally distributed with a mean profit of $20 million and a standard deviation of $10 million. What is the 95% VaR?",
+      "choices": ["$3.5 million", "$20.0 million", "$10.0 million", "$36.5 million"],
+      "answer": 0,
+      "explanation": "VaR(5%) = −μ + σ × z = −$20m + $10m × 1.65 = −$3.5m, reported as a loss of $3.5 million."
+    },
+    {
+      "q": "Using the same portfolio (mean profit $20 million, standard deviation $10 million, normally distributed P/L), what is the 99% VaR?",
+      "choices": ["$3.3 million", "$1.2 million", "$43.3 million", "$2.33 million"],
+      "answer": 0,
+      "explanation": "VaR(1%) = −μ + σ × z = −$20m + $10m × 2.33 = −$3.3m, reported as a loss of $3.3 million. It is larger than the 95% VaR because it guards against a rarer, more extreme event."
+    },
+    {
+      "q": "A $300 portfolio has arithmetic returns that are normally distributed with a mean of 12% and a standard deviation of 22%. What is the 95% VaR in dollars?",
+      "choices": ["$72.90", "$36.00", "$12.00", "$108.90"],
+      "answer": 0,
+      "explanation": "VaR(5%) = (−μ_r + σ_r × z) × P = (−0.12 + 1.65 × 0.22) × 300 = 0.243 × 300 = $72.90."
+    },
+    {
+      "q": "A portfolio currently worth $400 has geometric returns that are normally distributed with a mean of 5% and a standard deviation of 20%. What is the lognormal VaR at the 95% confidence level (approximately)?",
+      "choices": ["$97.70", "$112.00", "$28.00", "$400.00"],
+      "answer": 0,
+      "explanation": "VaR(5%) = P × (1 − e^(μ_R − σ_R × z)) = 400 × (1 − e^(0.05 − 0.20×1.65)) = 400 × (1 − e^(−0.28)) ≈ 400 × 0.2442 ≈ $97.70."
+    },
+    {
+      "q": "Which statement correctly describes the relationship between VaR, expected shortfall, and coherent risk measures?",
+      "choices": [
+        "VaR is a single quantile of the loss distribution; ES averages quantiles within the tail; a coherent risk measure averages weighted quantiles across the whole distribution",
+        "ES is a single quantile of the loss distribution, while VaR averages quantiles within the tail",
+        "Coherent risk measures only apply to the tail region, exactly like ES",
+        "VaR, ES, and coherent risk measures are unrelated concepts with no shared mathematical structure"
+      ],
+      "answer": 0,
+      "explanation": "VaR is one quantile; ES is an equally-weighted average of tail quantiles; a coherent risk measure generalizes further to a weighted average of quantiles across the entire distribution, with VaR and ES as special cases."
+    },
+    {
+      "q": "Increasing the number of tail slices n used to estimate expected shortfall will most likely:",
+      "choices": [
+        "cause the ES estimate to converge toward its true theoretical value",
+        "cause the ES estimate to diverge further from VaR with no bound",
+        "have no effect on the ES estimate",
+        "reduce the number of VaR calculations required to compute ES"
+      ],
+      "answer": 0,
+      "explanation": "As n grows, the tail is divided into finer slices and the average of the resulting VaR figures converges toward the true expected shortfall."
+    },
+    {
+      "q": "A confidence interval for a VaR estimate is constructed as [q + z_α × se(q)] > VaR > [q − z_α × se(q)]. If the sample size n increases while p and the bin width stay constant, what happens to this interval?",
+      "choices": [
+        "It narrows, because se(q) decreases",
+        "It widens, because se(q) increases",
+        "It stays exactly the same, because n does not appear in se(q)",
+        "It becomes asymmetric around q"
+      ],
+      "answer": 0,
+      "explanation": "se(q) = √(p(1−p)/n) / f(q). Increasing n with p and f(q) held fixed reduces se(q), which narrows the confidence interval."
+    },
+    {
+      "q": "In the standard error formula se(q) = √(p(1−p)/n) / f(q), for what value of p is the term p(1−p) maximized?",
+      "choices": ["p = 0.5", "p = 0", "p = 1", "p = 0.05"],
+      "answer": 0,
+      "explanation": "The function p(1−p) is a downward-opening parabola in p that peaks at p = 0.5, where it equals 0.25."
+    },
+    {
+      "q": "On a QQ plot comparing an empirical return series to the standard normal distribution, the points closely follow the 45° line near the median but diverge from it in both tails. What is the most accurate interpretation?",
+      "choices": [
+        "The empirical distribution is roughly symmetric but has tails that differ (fatter or thinner) from the normal distribution",
+        "The empirical distribution is identical to the normal distribution",
+        "The QQ plot proves the empirical distribution is not normal at a specific significance level",
+        "The empirical distribution has a different median than the normal distribution"
+      ],
+      "answer": 0,
+      "explanation": "Matching near the median indicates similar central behavior (and symmetry), while divergence in the tails indicates the tails are fatter or thinner than the normal. A QQ plot is a visual tool, not a formal hypothesis test."
+    },
+    {
+      "q": "Which expression correctly defines the geometric (continuously compounded) return R_t?",
+      "choices": [
+        "R_t = ln((P_t + D_t) / P_(t−1))",
+        "R_t = (P_t + D_t − P_(t−1)) / P_(t−1)",
+        "R_t = P_t − P_(t−1)",
+        "R_t = (P_t / P_(t−1)) − D_t"
+      ],
+      "answer": 0,
+      "explanation": "The geometric return is the natural log of the ratio of end-of-period value (including any distribution) to the starting value, reflecting continuous reinvestment."
+    },
+    {
+      "q": "Why might a risk manager prefer to model returns as normally distributed geometric returns (implying lognormal prices) rather than normally distributed arithmetic returns?",
+      "choices": [
+        "Because the resulting lognormal price distribution cannot produce a negative asset price",
+        "Because geometric returns are always larger in magnitude than arithmetic returns",
+        "Because geometric returns eliminate the need to estimate a standard deviation",
+        "Because arithmetic returns can never be negative, which understates risk"
+      ],
+      "answer": 0,
+      "explanation": "If geometric returns are normal, the price level is lognormal, which is bounded below by zero — avoiding the normal distribution's theoretical possibility of a negative price."
+    },
+    {
+      "q": "A coherent risk measure is constructed with n = 10. How many quantiles (slice boundaries) are used, and roughly where do they fall?",
+      "choices": [
+        "9 quantiles, at approximately the 10th, 20th, ..., 90th percentiles of the distribution",
+        "10 quantiles, at the 10th through 100th percentiles",
+        "5 quantiles, at the 20th, 40th, 60th, 80th, and 100th percentiles",
+        "n quantiles regardless of how the distribution is sliced"
+      ],
+      "answer": 0,
+      "explanation": "Dividing the distribution into n equal probability slices produces n − 1 interior boundaries; for n = 10 these fall at roughly the 10th through 90th percentiles."
+    },
+    {
+      "q": "Two portfolios have identical 95% VaR figures. Portfolio A's losses beyond the VaR threshold cluster just past the threshold, while Portfolio B's losses beyond the threshold occasionally include extreme outliers far beyond it. Which statement is most accurate?",
+      "choices": [
+        "Portfolio B will have a higher expected shortfall than Portfolio A, even though both have the same VaR",
+        "Portfolio A and B will have identical ES because they have identical VaR",
+        "Portfolio A will have a higher ES because it has more observations near the threshold",
+        "ES cannot be computed when two portfolios share the same VaR"
+      ],
+      "answer": 0,
+      "explanation": "ES averages losses throughout the tail, so a tail with occasional extreme outliers (Portfolio B) produces a higher ES even when the VaR threshold itself is identical."
+    }
+  ]
+}

@@ -16,7 +16,13 @@ concept/model, an entity/people page where relevant, and a formulas page.
 
 ## market-risk — Market Risk Measurement and Management
 
-_No lessons ingested yet._
+- Lesson 1: [[market-risk/R1 - Estimating Market Risk Measures - An Introduction and Overview/Summary|Estimating Market Risk Measures: An Introduction and Overview]]
+  - [[Historical Simulation VaR]] (LO 1.a)
+  - [[Parametric VaR - Normal and Lognormal]] (LO 1.b)
+  - [[Expected Shortfall]] (LO 1.c)
+  - [[Coherent Risk Measures and Quantiles]] (LO 1.d)
+  - [[Standard Errors of Risk Measure Estimators]] (LO 1.e)
+  - [[QQ Plots]] (LO 1.f)
 
 ## credit-risk — Credit Risk Measurement and Management
 

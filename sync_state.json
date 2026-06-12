@@ -1,1 +1,10 @@
-{}
+{
+  "market-risk/R1_Estimating_Market_Risk_Measures.pdf": {
+    "sha256": "e057a696a4f9fdd066431899b741b95f872f12075263467689a39a572148a3f3",
+    "processed_at": "2026-06-12",
+    "lesson": 1,
+    "title": "Estimating Market Risk Measures: An Introduction and Overview",
+    "wiki": "wiki/market-risk/R1 - Estimating Market Risk Measures - An Introduction and Overview/",
+    "quiz": "quiz/data/market-risk/lesson1.json"
+  }
+}
