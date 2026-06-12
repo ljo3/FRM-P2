@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FRM Part 2 — Study Quiz</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>FRM Part 2 Study Wiki</h1>
+    <nav class="mode-switch" id="mode-switch" hidden>
+      <button type="button" class="mode-btn active" data-mode="cards">Study Cards</button>
+      <button type="button" class="mode-btn" data-mode="quiz">Quiz</button>
+    </nav>
+  </header>
+
+  <main class="app-main">
+
+    <section id="empty-state" class="empty-state" hidden>
+      <h2>No lessons yet</h2>
+      <p>
+        This quiz site is ready, but no chapters have been ingested.
+      </p>
+      <p>
+        Drop a chapter PDF into <code>raw/&lt;TOPIC&gt;/</code> in the
+        project repo and ask your study agent to ingest it — once the first
+        lesson's quiz data lands in <code>quiz/data/</code>, study cards and
+        quizzes will appear here automatically.
+      </p>
+    </section>
+
+    <!-- Study Cards mode -->
+    <section id="cards-view" class="view" hidden>
+      <div class="controls">
+        <label>
+          Topic
+          <select id="cards-topic"></select>
+        </label>
+        <label>
+          Lesson
+          <select id="cards-lesson"></select>
+        </label>
+        <button type="button" id="cards-shuffle">Shuffle</button>
+      </div>
+
+      <div id="cards-empty" class="scope-empty" hidden>
+        <p>No flashcards in this selection yet.</p>
+      </div>
+
+      <div id="cards-deck" class="cards-deck" hidden>
+        <p class="card-counter"><span id="card-counter"></span></p>
+        <div class="flashcard" id="flashcard" tabindex="0" role="button" aria-pressed="false">
+          <div class="flashcard-inner">
+            <div class="flashcard-face flashcard-front" id="flashcard-front"></div>
+            <div class="flashcard-face flashcard-back" id="flashcard-back"></div>
+          </div>
+        </div>
+        <p class="hint">Click or press Enter/Space to flip</p>
+        <div class="card-nav">
+          <button type="button" id="card-prev">&larr; Prev</button>
+          <button type="button" id="card-next">Next &rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz mode -->
+    <section id="quiz-view" class="view" hidden>
+      <div class="controls">
+        <label>
+          Scope
+          <select id="quiz-scope"></select>
+        </label>
+        <button type="button" id="quiz-start">Start Quiz</button>
+      </div>
+
+      <div id="quiz-empty" class="scope-empty" hidden>
+        <p>No questions in this selection yet.</p>
+      </div>
+
+      <div id="quiz-question-area" class="quiz-question-area" hidden>
+        <p class="quiz-progress" id="quiz-progress"></p>
+        <p class="quiz-score" id="quiz-score-running"></p>
+        <h2 id="quiz-question"></h2>
+        <div id="quiz-choices" class="quiz-choices"></div>
+        <div id="quiz-feedback" class="quiz-feedback" hidden></div>
+        <button type="button" id="quiz-next" class="quiz-next" hidden>Next Question</button>
+      </div>
+
+      <div id="quiz-results" class="quiz-results" hidden>
+        <h2>Results</h2>
+        <p id="quiz-score-final"></p>
+        <button type="button" id="quiz-restart">New Quiz</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>FRM Part 2 study wiki &middot; generated locally, deployed statically</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

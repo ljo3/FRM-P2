@@ -1,0 +1,356 @@
+:root {
+  --bg: #0f1419;
+  --surface: #1a2230;
+  --surface-2: #232d3f;
+  --border: #2e3a4e;
+  --text: #e6edf3;
+  --text-dim: #9aa9bd;
+  --accent: #5aa9ff;
+  --accent-2: #7fd1b9;
+  --correct: #4caf6e;
+  --incorrect: #e0615a;
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.mode-switch {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mode-btn {
+  background: var(--surface);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.mode-btn:hover {
+  background: var(--surface-2);
+}
+
+.mode-btn.active {
+  background: var(--accent);
+  color: #07131f;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.app-footer {
+  text-align: center;
+  padding: 1rem;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem 1.5rem;
+  margin-top: 2rem;
+}
+
+.empty-state h2 {
+  margin-top: 0;
+}
+
+.empty-state code {
+  background: var(--surface-2);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.scope-empty {
+  text-align: center;
+  color: var(--text-dim);
+  padding: 2rem 1rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.controls label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  gap: 0.25rem;
+  flex: 1 1 160px;
+}
+
+select,
+button {
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+select {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.6rem;
+}
+
+button {
+  background: var(--accent);
+  color: #07131f;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.6rem 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.05s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Flashcards */
+.cards-deck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.card-counter {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.flashcard {
+  width: 100%;
+  max-width: 560px;
+  height: 260px;
+  perspective: 1200px;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backface-visibility: hidden;
+  font-size: 1.1rem;
+  overflow-y: auto;
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+  background: var(--surface-2);
+}
+
+.hint {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.card-nav {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Quiz */
+.quiz-progress {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin: 0 0 0.25rem;
+}
+
+.quiz-score {
+  color: var(--accent-2);
+  font-size: 0.85rem;
+  margin: 0 0 1rem;
+  font-weight: 600;
+}
+
+.quiz-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+
+.choice-btn {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 400;
+  width: 100%;
+}
+
+.choice-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.choice-btn.correct {
+  background: rgba(76, 175, 110, 0.18);
+  border-color: var(--correct);
+  color: var(--text);
+}
+
+.choice-btn.incorrect {
+  background: rgba(224, 97, 90, 0.18);
+  border-color: var(--incorrect);
+  color: var(--text);
+}
+
+.quiz-feedback {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.quiz-feedback.correct {
+  border-color: var(--correct);
+}
+
+.quiz-feedback.incorrect {
+  border-color: var(--incorrect);
+}
+
+.quiz-feedback .feedback-label {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.quiz-feedback.correct .feedback-label {
+  color: var(--correct);
+}
+
+.quiz-feedback.incorrect .feedback-label {
+  color: var(--incorrect);
+}
+
+.quiz-results {
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+}
+
+.quiz-results h2 {
+  margin-top: 0;
+}
+
+#quiz-score-final {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-2);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .flashcard {
+    height: 320px;
+  }
+
+  .controls label {
+    flex: 1 1 100%;
+  }
+}
