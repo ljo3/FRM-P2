@@ -1,4 +1,3 @@
-private_materials/
-node_modules/
+raw/
 .DS_Store
-wiki/.obsidian/
+.obsidian/
