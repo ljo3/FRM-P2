@@ -23,6 +23,11 @@ concept/model, an entity/people page where relevant, and a formulas page.
   - [[Coherent Risk Measures and Quantiles]] (LO 1.d)
   - [[Standard Errors of Risk Measure Estimators]] (LO 1.e)
   - [[QQ Plots]] (LO 1.f)
+- Lesson 2: [[market-risk/R2 - Non-Parametric Approaches/Summary|Non-Parametric Approaches]]
+  - [[Bootstrap Historical Simulation]] (LO 2.a)
+  - [[Non-Parametric Density Estimation]] (LO 2.b)
+  - [[Weighted Historical Simulation Approaches]] (LO 2.c)
+  - [[Non-Parametric Methods - Pros and Cons]] (LO 2.d)
 
 ## credit-risk — Credit Risk Measurement and Management
 

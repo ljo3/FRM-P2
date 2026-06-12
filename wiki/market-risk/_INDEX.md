@@ -9,3 +9,4 @@ updated: 2026-06-12
 [← Wiki Index](../_INDEX.md)
 
 - [R1 — Estimating Market Risk Measures: An Introduction and Overview](<R1 - Estimating Market Risk Measures - An Introduction and Overview/_INDEX.md>)
+- [R2 — Non-Parametric Approaches](<R2 - Non-Parametric Approaches/_INDEX.md>)

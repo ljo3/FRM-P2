@@ -27,3 +27,18 @@ bottom. Each entry: date, source file, what was created.
     Summary page and each learning-outcome page.
   - Moved the source PDF to `raw/market-risk/processed/` and recorded its
     sha256 hash, lesson number, and output paths in `sync_state.json`.
+
+- Ingested `R2_Non_Parametric_Approaches.pdf` (Reading 2, lesson 2) from
+  `raw/market-risk/`:
+  - Wrote `wiki/market-risk/R2 - Non-Parametric Approaches/` with
+    `Summary.md`, `Formulas.md`, `_INDEX.md`, and one page per learning
+    outcome (`Bootstrap Historical Simulation.md`, `Non-Parametric Density
+    Estimation.md`, `Weighted Historical Simulation Approaches.md`,
+    `Non-Parametric Methods - Pros and Cons.md`).
+  - Generated `quiz/data/market-risk/lesson2.json` (16 flashcards, 14
+    questions); added it to `quiz/data/manifest.json` and
+    `wiki/market-risk/_INDEX.md`.
+  - Updated the root `_INDEX.md` under `market-risk` with a link to the
+    Summary page and each learning-outcome page.
+  - Moved the source PDF to `raw/market-risk/processed/` and recorded its
+    sha256 hash, lesson number, and output paths in `sync_state.json`.

@@ -1,0 +1,217 @@
+{
+  "topic": "market-risk",
+  "lesson": 2,
+  "title": "Non-Parametric Approaches",
+  "flashcards": [
+    {
+      "front": "What is the core idea behind bootstrap historical simulation?",
+      "back": "Repeatedly draw random samples (with replacement) from the historical data set, compute a risk measure (VaR or ES) from each resample, and average the results to get the final estimate."
+    },
+    {
+      "front": "What does 'sampling with replacement' mean in the bootstrap procedure?",
+      "back": "After an observation is drawn from the data set, it is returned to the pool so it can be drawn again in a later resample."
+    },
+    {
+      "front": "How does bootstrapping improve on plain historical simulation?",
+      "back": "Empirically, averaging risk-measure estimates across many resamples produces more precise estimates of coherent risk measures than relying on the single VaR/ES computed from the raw, un-resampled data."
+    },
+    {
+      "front": "What problem does non-parametric density estimation solve?",
+      "back": "Plain historical simulation can only produce VaR at confidence levels corresponding to actual gaps between sorted observations (n observations → n confidence levels); density estimation smooths the histogram so VaR can be estimated at any confidence level."
+    },
+    {
+      "front": "How is a surrogate density function constructed in its simplest form?",
+      "back": "By connecting the midpoint of the top of each histogram bar to the midpoint of the top of the next bar with a straight line, creating a piecewise-linear approximation of the density."
+    },
+    {
+      "front": "Does connecting midpoints in a surrogate density function change the total probability mass?",
+      "back": "No — area is shifted between adjacent bars (a taller bar donates area to a shorter neighbor), but the total area under the curve is conserved, so it remains a valid probability distribution."
+    },
+    {
+      "front": "What weighting scheme does plain historical simulation implicitly use?",
+      "back": "Equal weight (1/n) for every observation inside the estimation window, and zero weight for everything outside it."
+    },
+    {
+      "front": "What is a 'ghost effect' in historical simulation?",
+      "back": "When a single extreme historical event continues to fully affect the VaR estimate for the entire estimation window, then disappears abruptly once it ages out — causing a sudden VaR jump unrelated to current market conditions."
+    },
+    {
+      "front": "How does age-weighted historical simulation assign weights?",
+      "back": "Weights decay exponentially with age: the most recent observation gets the largest weight, and each older observation's weight is the previous one multiplied by a decay parameter λ (0 ≤ λ ≤ 1), with all weights summing to 1."
+    },
+    {
+      "front": "What happens to age-weighting when λ = 1?",
+      "back": "It reduces to plain (equal-weighted) historical simulation — no decay at all."
+    },
+    {
+      "front": "What does volatility-weighted historical simulation adjust?",
+      "back": "It rescales each historical return by the ratio of the current volatility forecast to the volatility forecast that prevailed on the day the return occurred, then computes VaR/ES from the adjusted returns using the usual procedure."
+    },
+    {
+      "front": "Can volatility-weighted historical simulation produce a VaR larger than the worst historical loss?",
+      "back": "Yes — old high-volatility returns can be scaled up when current volatility is elevated, unlike plain historical simulation, whose VaR is always bounded by the worst observed historical loss."
+    },
+    {
+      "front": "How does correlation-weighted historical simulation differ from volatility-weighted historical simulation?",
+      "back": "Volatility-weighting updates only the diagonal (variance) elements of the covariance matrix; correlation-weighting updates the entire matrix — both variances and covariances — making it a richer but more complex tool for multi-asset portfolios."
+    },
+    {
+      "front": "What are the main steps of filtered historical simulation?",
+      "back": "(1) Fit a conditional volatility model (e.g., GARCH) to get daily volatility forecasts; (2) standardize historical returns by dividing by their volatility forecasts; (3) bootstrap from the standardized series and rescale using the current volatility forecast; (4) read VaR/ES off the simulated distribution."
+    },
+    {
+      "front": "What is a key advantage of non-parametric methods over parametric methods?",
+      "back": "They make no assumption about the shape of the distribution, so they naturally accommodate skewness and fat tails without requiring complex variance-covariance matrices."
+    },
+    {
+      "front": "What is the primary disadvantage shared by all non-parametric methods?",
+      "back": "They depend critically on historical data — if the historical sample doesn't represent future conditions well (e.g., due to volatile or quiet periods, or structural breaks), neither will the risk estimate."
+    }
+  ],
+  "questions": [
+    {
+      "q": "In bootstrap historical simulation, which VaR/ES figures contribute to the final estimate?",
+      "choices": [
+        "Only the VaR/ES figures computed from the resampled data sets, averaged together",
+        "Only the VaR/ES computed from the original, unmodified data set",
+        "The maximum VaR/ES across all resamples and the original data set",
+        "The original data set's VaR/ES, weighted equally with the resampled estimates"
+      ],
+      "answer": 0,
+      "explanation": "The bootstrap procedure draws repeated resamples with replacement, computes a risk measure from each, and averages those resampled estimates. The original data set's own VaR/ES is not part of the final average."
+    },
+    {
+      "q": "With 100 historical daily observations, plain historical simulation can distinguish how many distinct confidence levels?",
+      "choices": ["100", "1,000", "10", "Any confidence level, since historical simulation is continuous"],
+      "answer": 0,
+      "explanation": "With n observations, historical simulation can only identify n different confidence levels, since each achievable confidence level corresponds to one specific ordered observation."
+    },
+    {
+      "q": "In a surrogate density function built by connecting histogram bar midpoints, what happens to the area 'lost' by a taller bar?",
+      "choices": [
+        "It is shifted to a neighboring shorter bar, so total probability mass is conserved",
+        "It is discarded, reducing the total probability mass below 1",
+        "It is duplicated and added to both neighboring bars",
+        "It is converted into a parametric assumption about the tail"
+      ],
+      "answer": 0,
+      "explanation": "Connecting midpoints shifts area between adjacent bars without creating or destroying any, so the surrogate density still integrates to 1 and remains a valid distribution."
+    },
+    {
+      "q": "Which of the following is NOT one of the four weighted historical simulation approaches used to address the equal-weighting problem?",
+      "choices": [
+        "Market-weighted historical simulation",
+        "Correlation-weighted historical simulation",
+        "Volatility-weighted historical simulation",
+        "Age-weighted historical simulation"
+      ],
+      "answer": 0,
+      "explanation": "The four approaches are age-weighted, volatility-weighted, correlation-weighted, and filtered historical simulation. 'Market-weighted' is not one of them."
+    },
+    {
+      "q": "A decay parameter λ close to 0 in age-weighted historical simulation implies:",
+      "choices": [
+        "Weight is concentrated heavily on the most recent observations",
+        "All observations receive equal weight, just like plain historical simulation",
+        "Weight decays so slowly that ghost effects are eliminated entirely",
+        "The estimation window must be infinite"
+      ],
+      "answer": 0,
+      "explanation": "A small λ means each successive (older) observation's weight is multiplied by a small factor relative to the previous one, so weight decays quickly and concentrates on the most recent data."
+    },
+    {
+      "q": "Under the age-weighting formula w(i) = λ^(i−1)(1−λ)/(1−λ^n), what weighting scheme results in the limit as λ → 1?",
+      "choices": [
+        "Equal weighting, w(i) = 1/n for every observation",
+        "All weight on the most recent observation (i = 1)",
+        "All weight on the oldest observation (i = n)",
+        "Weights that sum to more than 1"
+      ],
+      "answer": 0,
+      "explanation": "λ = 1 (no decay) is the special case that reduces age-weighted historical simulation to plain historical simulation, where every observation in the window gets weight 1/n."
+    },
+    {
+      "q": "Volatility-weighted historical simulation adjusts each historical return r_(t,i) by multiplying it by which ratio?",
+      "choices": [
+        "σ_(T,i) / σ_(t,i) — the current volatility forecast divided by the volatility forecast on the day the return occurred",
+        "σ_(t,i) / σ_(T,i) — the volatility forecast on the day the return occurred divided by the current volatility forecast",
+        "r_(t,i) / σ_(t,i) — the return divided by its own volatility forecast",
+        "σ_(T,i) × σ_(t,i) — the product of current and historical volatility forecasts"
+      ],
+      "answer": 0,
+      "explanation": "The adjusted return is r*_(t,i) = (σ_(T,i) / σ_(t,i)) × r_(t,i), where σ_(T,i) is the current volatility forecast and σ_(t,i) is the volatility forecast on day t."
+    },
+    {
+      "q": "If current market volatility has risen sharply compared to the volatility prevailing during most of the historical sample, volatility-weighted historical simulation will:",
+      "choices": [
+        "Scale up historical returns, producing a higher VaR estimate than plain historical simulation",
+        "Scale down historical returns, producing a lower VaR estimate than plain historical simulation",
+        "Leave historical returns unchanged, since volatility-weighting only affects the confidence level",
+        "Discard all historical observations from low-volatility periods"
+      ],
+      "answer": 0,
+      "explanation": "Since the adjustment ratio σ_(T,i)/σ_(t,i) exceeds 1 when current volatility is higher than historical volatility, returns are scaled up, which tends to increase the resulting VaR estimate."
+    },
+    {
+      "q": "In the variance-covariance matrix Σ used in correlation-weighted historical simulation, the off-diagonal elements represent:",
+      "choices": [
+        "Covariances between asset pairs",
+        "Variances of individual assets",
+        "The decay parameter λ",
+        "The volatility-adjusted returns"
+      ],
+      "answer": 0,
+      "explanation": "The diagonal elements of Σ are the individual asset variances; the off-diagonal elements are the covariances between pairs of assets, which combined with the variances determine correlations."
+    },
+    {
+      "q": "Which of the following best describes filtered historical simulation?",
+      "choices": [
+        "It combines a conditional volatility model with bootstrapped historical simulation on standardized returns",
+        "It is identical to age-weighted historical simulation but with a different decay formula",
+        "It assumes returns are normally distributed and applies the delta-normal VaR formula",
+        "It requires no historical data, relying only on a fitted GARCH model"
+      ],
+      "answer": 0,
+      "explanation": "Filtered historical simulation standardizes historical returns using a conditional volatility model (e.g., GARCH), bootstraps from the standardized series, and rescales using the current volatility forecast before reading off VaR/ES."
+    },
+    {
+      "q": "A risk manager's 1,000-observation historical data set was collected during an unusually volatile period. Relative to current, calmer conditions, plain historical simulation's VaR estimate will most likely be:",
+      "choices": ["Too high", "Too low", "Unaffected, since historical simulation is distribution-free", "Exactly equal to the true current VaR"],
+      "answer": 0,
+      "explanation": "A historical sample drawn from a volatile period overstates the losses likely under current, calmer conditions, so the resulting VaR/ES estimates will tend to be too high."
+    },
+    {
+      "q": "All of the following are advantages of non-parametric methods EXCEPT:",
+      "choices": [
+        "They can produce reliable estimates even with very short historical data sets",
+        "They accommodate skewed or fat-tailed data without distributional assumptions",
+        "They avoid the need to estimate and invert large variance-covariance matrices",
+        "They are conceptually simple and can be implemented on a spreadsheet"
+      ],
+      "answer": 0,
+      "explanation": "Non-parametric methods are data-hungry — they need a long, representative historical sample to produce meaningful estimates, which is a disadvantage, not an advantage."
+    },
+    {
+      "q": "Why can plain historical simulation never produce a VaR estimate larger than the worst loss observed in the sample?",
+      "choices": [
+        "Because VaR is read directly from the ordered historical observations, and no observation can exceed the sample's maximum loss",
+        "Because VaR is capped by regulation at the historical maximum loss",
+        "Because the bootstrap procedure always shrinks extreme values toward the mean",
+        "Because historical simulation assumes a normal distribution, which has no maximum"
+      ],
+      "answer": 0,
+      "explanation": "Historical simulation VaR is always one of the actual ordered observations in the sample, so it is mechanically bounded by the worst loss that occurred."
+    },
+    {
+      "q": "A junior analyst proposes combining age-weighting with volatility-weighting in the same VaR model. Is this approach reasonable?",
+      "choices": [
+        "Yes — non-parametric weighting schemes are not mutually exclusive and can be combined, as filtered historical simulation does by combining volatility modeling with bootstrapping",
+        "No — only one weighting scheme can be applied to a historical data set at a time",
+        "No — age-weighting and volatility-weighting are mathematically incompatible",
+        "Yes, but only if the data set has fewer than 100 observations"
+      ],
+      "answer": 0,
+      "explanation": "These techniques are composable: age-weighting adjusts how much each observation counts based on recency, while volatility-weighting rescales the returns themselves, and both can be applied together or combined with bootstrapping."
+    }
+  ]
+}

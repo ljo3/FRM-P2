@@ -6,5 +6,13 @@
     "title": "Estimating Market Risk Measures: An Introduction and Overview",
     "wiki": "wiki/market-risk/R1 - Estimating Market Risk Measures - An Introduction and Overview/",
     "quiz": "quiz/data/market-risk/lesson1.json"
+  },
+  "market-risk/R2_Non_Parametric_Approaches.pdf": {
+    "sha256": "6ac82f650559438b40912e3a7bf2cf207ac98dc09bf2539f490b4cd42422fe56",
+    "processed_at": "2026-06-12",
+    "lesson": 2,
+    "title": "Non-Parametric Approaches",
+    "wiki": "wiki/market-risk/R2 - Non-Parametric Approaches/",
+    "quiz": "quiz/data/market-risk/lesson2.json"
   }
 }
