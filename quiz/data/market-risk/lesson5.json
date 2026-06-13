@@ -1,0 +1,234 @@
+{
+  "topic": "market-risk",
+  "lesson": 5,
+  "title": "VaR Mapping",
+  "flashcards": [
+    {
+      "front": "What is VaR mapping, in one sentence?",
+      "back": "Replacing a portfolio's actual positions with exposures to a smaller set of common risk factors, so that portfolio VaR can be computed from those factors' volatilities and correlations instead of from every individual position."
+    },
+    {
+      "front": "Give two situations (besides 'too many positions') where mapping is especially useful.",
+      "back": "(1) Instruments whose characteristics change over time, such as bonds whose remaining maturity shortens daily; (2) instruments with little or no historical price data, such as a recent IPO, where the manager instead reasons about the broad risk factors likely to drive the position."
+    },
+    {
+      "front": "What are the two steps of the mapping process?",
+      "back": "Step 1: identify common risk factors shared across positions. Step 2: express each position's market value as exposures to those factors, producing a vector of aggregate risk-factor exposures for the whole portfolio."
+    },
+    {
+      "front": "How does the choice of general risk factors affect specific risk?",
+      "back": "Specific risk is whatever variation in a position's value is not explained by the chosen general risk factors. The more precisely (granularly) general risk factors are defined, the smaller the residual specific risk becomes."
+    },
+    {
+      "front": "In the equity-portfolio example, why is mapping every stock onto a single market index so valuable?",
+      "back": "Without mapping, a 5,000-stock portfolio would require about 12.5 million pairwise covariance terms. Mapping each stock's systematic component onto a single index factor (via its beta) reduces this to a handful of parameters, since diversification removes most of the firm-specific component."
+    },
+    {
+      "front": "Name the three fixed-income mapping methods, from least to most precise.",
+      "back": "Principal mapping (least precise, considers only average timing of principal repayment), duration mapping (intermediate, matches the portfolio's overall duration), and cash flow mapping (most precise, maps every individual cash flow and incorporates inter-maturity correlations)."
+    },
+    {
+      "front": "What does principal mapping ignore that duration mapping accounts for?",
+      "back": "Principal mapping ignores all coupon payments and considers only the timing of principal/maturity repayments at the portfolio's weighted-average life. Duration mapping accounts for the size and timing of all cash flows (coupons and principal) via the portfolio's Macaulay duration."
+    },
+    {
+      "front": "Why might duration mapping require interpolation?",
+      "back": "Because a portfolio's duration will rarely exactly equal one of the standard zero-coupon maturities for which VaR percentages are available, so the VaR percentage for the portfolio's duration must usually be interpolated between two adjacent maturities."
+    },
+    {
+      "front": "What is undiversified VaR, and how is it calculated from a cash-flow map?",
+      "back": "Undiversified VaR is the portfolio VaR that results from assuming all mapped risk factors are perfectly correlated (correlation = 1). It is calculated as the simple sum of the absolute VaR contributions of each mapped position."
+    },
+    {
+      "front": "How does diversified VaR differ from undiversified VaR, and which is typically larger?",
+      "back": "Diversified VaR incorporates the actual (less-than-perfect) correlations between risk factors via matrix algebra, while undiversified VaR assumes perfect correlation. Undiversified VaR is typically larger than (or equal to) diversified VaR."
+    },
+    {
+      "front": "How can stress testing reproduce the undiversified VaR of a mapped portfolio?",
+      "back": "By reducing each mapped zero-coupon position's value by its own VaR percentage and revaluing the whole portfolio; the difference between the original and stressed portfolio values equals the undiversified VaR -- but this shortcut is only valid if correlations across maturities are exactly 1."
+    },
+    {
+      "front": "What is tracking error VaR?",
+      "back": "The VaR of the difference between a portfolio's and a benchmark's vectors of market value positions -- a measure of how risky the deviation between the portfolio and its benchmark is, not how risky either portfolio is on its own."
+    },
+    {
+      "front": "How is a forward contract on a foreign currency decomposed for delta-normal mapping?",
+      "back": "Into three pieces: a short position in a domestic zero-coupon bill, a long position in a foreign-currency zero-coupon bill, and a long position in the foreign currency spot market -- each of which maps onto risk factors with available volatility and correlation data."
+    },
+    {
+      "front": "How is an interest rate swap decomposed for VaR mapping?",
+      "back": "Into a fixed-rate bond position (the fixed leg, priced like a coupon-paying bond) and a floating-rate note position (the floating leg, valued near par because it reprices at each reset date) -- one leg long and the other short, depending on which side of the swap is held."
+    },
+    {
+      "front": "Why does the delta-normal method become less reliable for options over long horizons?",
+      "back": "Delta-normal mapping approximates an option's value change as proportional to the change in the underlying (via delta), which is only accurate when delta stays roughly constant. Over long horizons, delta changes substantially as the underlying price moves and time passes, so the linear approximation breaks down."
+    }
+  ],
+  "questions": [
+    {
+      "q": "Which of the following best describes the core purpose of VaR mapping?",
+      "choices": [
+        "Replacing the actual positions in a portfolio with exposures to a smaller set of common risk factors to simplify risk measurement",
+        "Replacing a portfolio's market value with its book value for accounting purposes",
+        "Eliminating the need to ever recompute VaR after the initial calculation",
+        "Converting a portfolio's currency exposure into a single reporting currency"
+      ],
+      "answer": 0,
+      "explanation": "Mapping re-expresses portfolio positions as exposures to common risk factors (interest rates, equity indices, exchange rates, etc.), which dramatically reduces the number of volatilities and correlations that must be estimated."
+    },
+    {
+      "q": "How does the definition of 'specific risk' change as more general risk factors are added to a model of a bond portfolio?",
+      "choices": [
+        "Specific risk shrinks, since more of the portfolio's variance is explained by the additional general risk factors",
+        "Specific risk grows, since more factors increase the residual variance",
+        "Specific risk stays constant regardless of how many general risk factors are used",
+        "Specific risk becomes undefined once more than one risk factor is used"
+      ],
+      "answer": 0,
+      "explanation": "Specific risk is whatever is left unexplained by the general risk factors. Starting from duration alone and adding credit and currency risk factors progressively shrinks the unexplained (specific risk) component."
+    },
+    {
+      "q": "In the example of mapping a 5,000-stock equity portfolio, what role does the regression R_i = alpha_i + beta_i*R_M + epsilon_i play?",
+      "choices": [
+        "It estimates each stock's exposure (beta) to the market index, which becomes the basis for mapping the stock's systematic risk onto a single common factor",
+        "It computes each stock's dividend yield relative to the market",
+        "It is used to forecast each stock's future price level directly",
+        "It eliminates the need to compute portfolio weights"
+      ],
+      "answer": 0,
+      "explanation": "Beta_i, the coefficient on the market return, is the factor exposure used to map each stock's systematic (market) risk onto the index, while alpha is dropped and epsilon is treated as firm-specific residual risk."
+    },
+    {
+      "q": "Which fixed-income mapping method considers only the timing of principal (maturity) repayments and ignores coupon payments entirely?",
+      "choices": [
+        "Principal mapping",
+        "Duration mapping",
+        "Cash flow mapping",
+        "Present value mapping"
+      ],
+      "answer": 0,
+      "explanation": "Principal mapping is the simplest of the three methods -- it maps the entire portfolio value to the zero-coupon VaR percentage at the portfolio's weighted-average life, ignoring coupons."
+    },
+    {
+      "q": "A portfolio consists of a $100 million bond maturing in 2 years and a $100 million bond maturing in 6 years (both par bonds, equal weights). Using principal mapping, what maturity zero-coupon bond should the VaR percentage be drawn from?",
+      "choices": [
+        "A 4-year zero-coupon bond (the weighted-average life)",
+        "A 2-year zero-coupon bond (the shorter maturity)",
+        "A 6-year zero-coupon bond (the longer maturity)",
+        "An 8-year zero-coupon bond (the sum of the maturities)"
+      ],
+      "answer": 0,
+      "explanation": "Principal mapping uses the weighted-average life of the portfolio: 0.50(2) + 0.50(6) = 4 years, so the VaR percentage for a 4-year zero is applied to the total market value."
+    },
+    {
+      "q": "In duration mapping, why is interpolation often required to find the appropriate VaR percentage?",
+      "choices": [
+        "Because the portfolio's Macaulay duration rarely coincides exactly with one of the standard zero-coupon maturities available in the risk system",
+        "Because duration mapping requires VaR percentages at the 99% confidence level only",
+        "Because duration is always a whole number of years",
+        "Because interpolation is required only when the portfolio contains floating-rate notes"
+      ],
+      "answer": 0,
+      "explanation": "A portfolio's duration (e.g., 2.768 years) typically falls between two standard zero-coupon maturities, so the VaR percentage at that exact duration must be linearly interpolated between the VaR percentages of the bracketing maturities."
+    },
+    {
+      "q": "If all zero-coupon bonds in a cash-flow-mapped portfolio were perfectly correlated with one another, portfolio VaR would equal:",
+      "choices": [
+        "Undiversified VaR",
+        "Diversified VaR",
+        "Tracking error VaR",
+        "Marginal VaR"
+      ],
+      "answer": 0,
+      "explanation": "Undiversified VaR is defined as the simple sum of each mapped position's individual VaR contribution, which is the correct portfolio VaR only under the assumption of perfect (correlation = 1) correlation across all mapped risk factors."
+    },
+    {
+      "q": "Relative to undiversified VaR, diversified VaR computed from the same cash-flow map will generally be:",
+      "choices": [
+        "Lower, because imperfect correlations across maturities reduce the likelihood that all positions hit their worst case simultaneously",
+        "Higher, because correlations always amplify risk",
+        "Identical, since correlation has no effect on portfolio VaR",
+        "Undefined, since diversified VaR cannot be computed for fixed-income portfolios"
+      ],
+      "answer": 0,
+      "explanation": "Diversified VaR incorporates the actual correlation matrix, which is less than the perfect-correlation assumption behind undiversified VaR; this generally reduces the estimated VaR, reflecting a diversification benefit."
+    },
+    {
+      "q": "Among several duration-matched candidate portfolios, the one containing a 2-year zero-coupon bond has the smallest tracking error to a benchmark. What is the most likely explanation?",
+      "choices": [
+        "The benchmark portfolio's cash flows are heavily concentrated around the 2-year maturity, so this candidate's cash-flow profile most closely resembles the benchmark's",
+        "2-year zero-coupon bonds always have the lowest VaR of any maturity",
+        "Tracking error VaR can only be computed when a 2-year bond is included",
+        "The 2-year bond has zero correlation with all other maturities"
+      ],
+      "answer": 0,
+      "explanation": "Tracking error reflects how closely a candidate's cash-flow timing matches the benchmark's. If the benchmark's cash flows are concentrated near the 2-year point, a candidate that also has substantial 2-year exposure will track it more closely, reducing tracking error."
+    },
+    {
+      "q": "The variance improvement for a candidate portfolio is computed as 1 - (TE VaR / Benchmark VaR)^2. If TE VaR = $0.17 million and Benchmark VaR = $1.99 million, the variance improvement is approximately:",
+      "choices": [
+        "99.3%",
+        "8.5%",
+        "91.5%",
+        "0.7%"
+      ],
+      "answer": 0,
+      "explanation": "1 - (0.17 / 1.99)^2 = 1 - (0.0854)^2 = 1 - 0.0073 = 0.993, or 99.3%. A small tracking error relative to the benchmark VaR produces a variance improvement close to 100%."
+    },
+    {
+      "q": "For a forward position decomposed into a long foreign bill and a short domestic bill of equal present value, the undiversified VaR is computed as $6.01 million while the diversified VaR is $5.588 million. What explains the difference?",
+      "choices": [
+        "The diversified VaR accounts for the (imperfect) correlation between the two legs via matrix algebra, while the undiversified VaR assumes perfect correlation",
+        "The undiversified VaR uses a higher confidence level than the diversified VaR",
+        "The diversified VaR ignores the short leg of the position entirely",
+        "The two figures should always be identical, and the difference indicates a calculation error"
+      ],
+      "answer": 0,
+      "explanation": "Undiversified VaR sums the absolute VaR contributions of each leg assuming perfect correlation; diversified VaR applies the actual correlation matrix via matrix algebra, which generally produces a lower figure when correlation is less than 1."
+    },
+    {
+      "q": "When mapping a 6x12 forward rate agreement (FRA) on a notional amount, the position is treated as equivalent to:",
+      "choices": [
+        "Borrowing the notional for the near period (e.g., 180 days) and investing the proceeds for the far period (e.g., 360 days)",
+        "A single zero-coupon bond maturing at the average of the near and far dates",
+        "An equity position with beta equal to the implied forward rate",
+        "A perpetual annuity with payments equal to the notional amount"
+      ],
+      "answer": 0,
+      "explanation": "An FRA is mapped as two offsetting zero-coupon exposures corresponding to borrowing for the near period and investing for the far period (or the reverse), each with its own present value and VaR percentage."
+    },
+    {
+      "q": "An interest rate swap in which the holder pays a fixed rate and receives a floating rate is decomposed, for mapping purposes, into:",
+      "choices": [
+        "A short position in a fixed-coupon bond and a long position in a floating-rate note valued near its notional amount",
+        "A long position in a fixed-coupon bond and a short position in a zero-coupon bond",
+        "Two identical long positions in floating-rate notes",
+        "A single position in an at-the-money option on the floating rate"
+      ],
+      "answer": 0,
+      "explanation": "Paying fixed is economically equivalent to being short a fixed-coupon bond (you owe those fixed payments), while receiving floating is equivalent to a long position in a floating-rate note, which reprices close to par at each reset date."
+    },
+    {
+      "q": "Why can the delta-normal method sometimes be applied to options despite their nonlinear payoffs?",
+      "choices": [
+        "Because over a small enough range, the change in an option's value can be approximated as delta times the change in the underlying price -- a linear approximation",
+        "Because all options have a constant delta of 1 by definition",
+        "Because the delta-normal method ignores the underlying's volatility entirely",
+        "Because options have no specific risk, only general risk"
+      ],
+      "answer": 0,
+      "explanation": "The delta-normal method treats the option as a linear position of size 'delta' in the underlying, which is a reasonable local approximation as long as delta does not change much over the period being measured."
+    },
+    {
+      "q": "Why does the delta-normal approximation for options become less reliable as the risk horizon lengthens?",
+      "choices": [
+        "Because delta changes as the underlying price moves and time passes, so a linear approximation based on a fixed delta becomes increasingly inaccurate over longer periods",
+        "Because longer horizons always have lower volatility, making VaR meaningless",
+        "Because regulators prohibit delta-normal VaR for horizons longer than one day",
+        "Because options expire before any horizon longer than one day can be measured"
+      ],
+      "answer": 0,
+      "explanation": "Delta is not constant -- it shifts with the underlying price and the passage of time. Over short horizons this shift is small enough that a linear approximation works reasonably well, but over longer horizons the instability of delta undermines the approximation's accuracy."
+    }
+  ]
+}

@@ -12,3 +12,4 @@ updated: 2026-06-13
 - [R2 — Non-Parametric Approaches](<R2 - Non-Parametric Approaches/_INDEX.md>)
 - [R3 — Parametric Approaches (II): Extreme Value](<R3 - Parametric Approaches (II) - Extreme Value/_INDEX.md>)
 - [R4 — Backtesting VaR](<R4 - Backtesting VaR/_INDEX.md>)
+- [R5 — VaR Mapping](<R5 - VaR Mapping/_INDEX.md>)

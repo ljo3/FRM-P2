@@ -76,3 +76,19 @@ bottom. Each entry: date, source file, what was created.
   - Moved the source PDF to `raw/market-risk/processed/` and recorded its
     sha256 hash, lesson number, and output paths in `sync_state.json`.
 
+- Ingested `R5_VaR_Mapping.pdf` (Reading 5, lesson 5) from
+  `raw/market-risk/`:
+  - Wrote `wiki/market-risk/R5 - VaR Mapping/` with `Summary.md`,
+    `Formulas.md`, `_INDEX.md`, and one page per learning outcome (`VaR
+    Mapping Principles and Process.md`, `General and Specific Risk in
+    Mapping.md`, `Mapping Fixed-Income Portfolios.md`, `Stress Testing via
+    Mapping.md`, `Benchmarking and Tracking Error VaR.md`, `Mapping
+    Forwards, Swaps, and Options.md`).
+  - Generated `quiz/data/market-risk/lesson5.json` (15 flashcards, 15
+    questions); added it to `quiz/data/manifest.json` and
+    `wiki/market-risk/_INDEX.md`.
+  - Updated the root `_INDEX.md` under `market-risk` with a link to the
+    Summary page and each learning-outcome page.
+  - Moved the source PDF to `raw/market-risk/processed/` and recorded its
+    sha256 hash, lesson number, and output paths in `sync_state.json`.
+

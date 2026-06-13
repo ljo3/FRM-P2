@@ -41,6 +41,13 @@ concept/model, an entity/people page where relevant, and a formulas page.
   - [[Type I and Type II Errors and the Kupiec Test]] (LO 4.d)
   - [[Conditional Coverage Testing]] (LO 4.e)
   - [[Basel Rules for Backtesting]] (LO 4.f)
+- Lesson 5: [[market-risk/R5 - VaR Mapping/Summary|VaR Mapping]]
+  - [[VaR Mapping Principles and Process]] (LO 5.a)
+  - [[General and Specific Risk in Mapping]] (LO 5.b)
+  - [[Mapping Fixed-Income Portfolios]] (LO 5.c, 5.d)
+  - [[Stress Testing via Mapping]] (LO 5.e)
+  - [[Benchmarking and Tracking Error VaR]] (LO 5.f)
+  - [[Mapping Forwards, Swaps, and Options]] (LO 5.g)
 
 ## credit-risk — Credit Risk Measurement and Management
 

@@ -30,5 +30,13 @@
     "title": "Backtesting VaR",
     "wiki": "wiki/market-risk/R4 - Backtesting VaR/",
     "quiz": "quiz/data/market-risk/lesson4.json"
+  },
+  "market-risk/R5_VaR_Mapping.pdf": {
+    "sha256": "7a100d5aeb392d7334851f84ec3e5455b7011d3093675ddd0aa664f39dd9d88a",
+    "processed_at": "2026-06-13",
+    "lesson": 5,
+    "title": "VaR Mapping",
+    "wiki": "wiki/market-risk/R5 - VaR Mapping/",
+    "quiz": "quiz/data/market-risk/lesson5.json"
   }
 }
