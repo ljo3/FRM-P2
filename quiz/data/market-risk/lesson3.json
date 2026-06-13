@@ -1,0 +1,224 @@
+{
+  "topic": "market-risk",
+  "lesson": 3,
+  "title": "Parametric Approaches (II): Extreme Value",
+  "flashcards": [
+    {
+      "front": "Why does the rarity of extreme events make them hard to model?",
+      "back": "There are very few historical observations to calibrate from, and some plausible magnitudes of loss may never have occurred in the data, so any assumed distribution carries unavoidable model error — especially since standard distributions are typically fit to the center of the data, not the tail."
+    },
+    {
+      "front": "What is the central idea of extreme value theory (EVT)?",
+      "back": "EVT is a branch of applied statistics focused specifically on the tail of a distribution — the extreme outcomes — rather than the central-tendency statistics governed by the central limit theorem. It provides a template for estimating the parameters that describe extreme movements."
+    },
+    {
+      "front": "What does the Fisher-Tippett theorem state?",
+      "back": "As the sample size n gets large, the distribution of the maxima M_n (the largest value drawn from each of many large samples) converges to the generalized extreme value (GEV) distribution."
+    },
+    {
+      "front": "What do μ, σ, and ξ represent in the GEV distribution?",
+      "back": "μ is the location parameter and σ is the scale parameter — related to but distinct from the mean and variance — while ξ is the tail index, which governs the shape (heaviness) of the tail."
+    },
+    {
+      "front": "What are the three cases of the GEV distribution based on the sign of ξ?",
+      "back": "ξ > 0 gives the Frechet distribution (heavy tails, like the t-distribution or Pareto); ξ = 0 gives the Gumbel distribution (light tails, like the normal or lognormal); ξ < 0 gives the Weibull distribution (tails lighter than normal, rarely seen in finance)."
+    },
+    {
+      "front": "What are the three practical ways to decide whether to assume ξ > 0 or ξ = 0?",
+      "back": "(1) Rely on confidence about the parent distribution — e.g., assume ξ > 0 if it's known to be a t-distribution; (2) run a statistical test and use ξ = 0 if it can't be rejected; (3) conservatively assume ξ > 0 to avoid understating tail risk."
+    },
+    {
+      "front": "What does the peaks-over-threshold (POT) approach model?",
+      "back": "The conditional distribution of excess losses (X − u) over a high threshold u, given that the threshold has been exceeded — rather than modeling the entire loss distribution."
+    },
+    {
+      "front": "What does F_u(x) represent in the POT framework?",
+      "back": "The conditional distribution of the excess over threshold u: F_u(x) = P(X − u ≤ x | X > u), the probability the excess is at most x given that the threshold is exceeded."
+    },
+    {
+      "front": "What does the Gnedenko-Pickands-Balkema-deHaan (GPBdH) theorem say?",
+      "back": "As the threshold u gets large, the conditional excess distribution F_u(x) converges to a generalized Pareto (GP) distribution, parameterized by a scale parameter β and a shape parameter ξ (the same ξ as in the GEV distribution)."
+    },
+    {
+      "front": "What is the tradeoff in choosing the POT threshold u?",
+      "back": "u must be high enough for the GPBdH convergence result to be a good approximation, but low enough that there remain enough exceedances (N_u) to estimate β and ξ reliably via maximum likelihood."
+    },
+    {
+      "front": "What is expected shortfall (ES) and why is it a useful complement to VaR?",
+      "back": "ES is the expected loss given that the loss exceeds VaR, i.e., E[L_P | L_P > VaR]. Unlike VaR, it captures the severity of losses beyond the VaR cutoff, giving insight into how bad the tail really is."
+    },
+    {
+      "front": "How do GEV and POT differ in parameter count and data efficiency?",
+      "back": "GEV requires one more parameter (location, scale, shape) than POT (scale and shape only). GEV's block-maxima approach can also be less data-efficient, since it keeps only one extreme value per block, whereas POT can use every observation that exceeds the threshold."
+    },
+    {
+      "front": "What new concept does multivariate EVT introduce that univariate EVT does not address?",
+      "back": "Tail dependence — the tendency for extreme values in different variables or markets to occur together (e.g., a shock that produces extreme losses in oil markets and in broader financial markets simultaneously)."
+    },
+    {
+      "front": "Why are elliptical distributions and covariance matrices inadequate for modeling multivariate extremes?",
+      "back": "They describe average co-movement and impose a symmetric dependence structure, but don't capture what happens specifically in the joint tails. Modeling multivariate extremes instead requires copulas — specifically, extreme value (EV) copulas."
+    },
+    {
+      "front": "Why does adding dimensions make multivariate EVT much harder?",
+      "back": "Joint extreme events become exponentially rarer as more independent variables are added — e.g., a 1-in-100 univariate event becomes a 1-in-10,000 joint event for two variables and 1-in-1,000,000 for three — drastically shrinking available data while increasing the number of parameters to estimate."
+    }
+  ],
+  "questions": [
+    {
+      "q": "According to the Fisher-Tippett theorem, as the sample size n grows large, the distribution of sample maxima M_n converges to which distribution?",
+      "choices": [
+        "The generalized Pareto distribution",
+        "The generalized extreme value distribution",
+        "The normal distribution",
+        "The uniform distribution"
+      ],
+      "answer": 1,
+      "explanation": "The Fisher-Tippett theorem describes convergence of block maxima to the generalized extreme value (GEV) distribution. The generalized Pareto distribution is instead the limiting distribution of POT excesses."
+    },
+    {
+      "q": "In the GEV distribution, a tail index ξ = 0 corresponds to which named distribution, and what tail behavior does it imply?",
+      "choices": [
+        "Frechet distribution; heavy tails",
+        "Gumbel distribution; light tails similar to the normal or lognormal distribution",
+        "Weibull distribution; tails lighter than the normal distribution",
+        "Pareto distribution; heavy tails"
+      ],
+      "answer": 1,
+      "explanation": "ξ = 0 corresponds to the Gumbel case, which has light tails comparable to the normal or lognormal distribution."
+    },
+    {
+      "q": "A risk manager is confident that portfolio losses follow a Student's t-distribution, which is known to be heavy-tailed. Under the GEV framework, which tail index assumption is most appropriate?",
+      "choices": [
+        "ξ > 0 (Frechet)",
+        "ξ = 0 (Gumbel)",
+        "ξ < 0 (Weibull)",
+        "ξ must equal exactly 1"
+      ],
+      "answer": 0,
+      "explanation": "If the researcher is confident the parent distribution is heavy-tailed (e.g., a t-distribution), the Frechet case (ξ > 0) is the appropriate assumption."
+    },
+    {
+      "q": "In the POT approach, the function F_u(x) represents:",
+      "choices": [
+        "The unconditional distribution of all losses",
+        "The conditional distribution of the excess loss over threshold u, given that the threshold is exceeded",
+        "The distribution of block maxima",
+        "The probability that the threshold u is never exceeded"
+      ],
+      "answer": 1,
+      "explanation": "F_u(x) = P(X − u ≤ x | X > u) is the conditional distribution of the excess over the threshold, given the threshold is exceeded."
+    },
+    {
+      "q": "Which of the following is an advantage of the POT approach relative to GEV-based approaches?",
+      "choices": [
+        "POT generally requires fewer estimated parameters",
+        "POT does not require choosing a threshold",
+        "POT does not share any parameters with GEV",
+        "POT can be applied without any assumption about the parent distribution of losses being unknown"
+      ],
+      "answer": 0,
+      "explanation": "POT generally requires fewer parameters (β and ξ) than GEV-based approaches (μ, σ, and ξ). POT does require choosing a threshold, and both approaches share the tail index ξ."
+    },
+    {
+      "q": "The generalized Pareto distribution's shape relative to the normal distribution near the tail is best described as:",
+      "choices": [
+        "Always below the normal distribution everywhere",
+        "Identical to the normal distribution throughout",
+        "Dipping slightly below the normal distribution before the tail, then rising above it in the extreme tail, with an approximately linear shape there",
+        "Always above the normal distribution everywhere"
+      ],
+      "answer": 2,
+      "explanation": "The GP distribution dips below the normal distribution just before the tail and then rises above it deep in the tail, giving a roughly linear shape that better matches empirical loss data."
+    },
+    {
+      "q": "A risk analyst estimates GP parameters β = 0.6 and ξ = 0.3, with threshold u = 1.5% and N_u/n = 4%. What is the 1% VaR (in percentage terms)?",
+      "choices": ["1.03%", "1.50%", "2.53%", "3.83%"],
+      "answer": 2,
+      "explanation": "n/N_u = 25, so (n/N_u)(1−c) = 25 × 0.01 = 0.25. 0.25^(−0.3) ≈ 1.516. (β/ξ) × (1.516 − 1) = 2 × 0.516 ≈ 1.03. VaR = u + 1.03 = 1.5% + 1.03% ≈ 2.53%."
+    },
+    {
+      "q": "Using the same parameters as the previous question (β = 0.6, ξ = 0.3, u = 1.5%, and VaR ≈ 2.53%), what is the corresponding expected shortfall?",
+      "choices": ["2.53%", "3.03%", "3.83%", "4.33%"],
+      "answer": 2,
+      "explanation": "ES = VaR/(1−ξ) + (β − ξu)/(1−ξ) = 2.53/0.7 + (0.6 − 0.45)/0.7 ≈ 3.61 + 0.21 ≈ 3.83%."
+    },
+    {
+      "q": "Why must the POT threshold u be chosen carefully?",
+      "choices": [
+        "Because u must be high enough for the GP approximation to hold, but low enough to leave sufficient exceedances to estimate the parameters",
+        "Because u determines the value of ξ directly through a fixed formula",
+        "Because u must always equal the median of the loss distribution",
+        "Because choosing u incorrectly changes the sign of β"
+      ],
+      "answer": 0,
+      "explanation": "The threshold involves a tradeoff: high enough for the GPBdH convergence to be valid, but low enough that enough exceedances remain to estimate β and ξ reliably."
+    },
+    {
+      "q": "Relative to POT, the GEV approach:",
+      "choices": [
+        "Requires estimating one fewer parameter",
+        "Requires estimating one additional parameter, and can be less data-efficient because block-maxima methods retain only one extreme value per block",
+        "Does not share any parameters with POT",
+        "Eliminates the need for a tail index entirely"
+      ],
+      "answer": 1,
+      "explanation": "GEV requires location, scale, and shape parameters (one more than POT's scale and shape), and block-maxima approaches can discard useful data by keeping only the single largest value per block."
+    },
+    {
+      "q": "Both the GEV and POT approaches share which parameter?",
+      "choices": [
+        "The location parameter μ",
+        "The scale parameter β",
+        "The tail index ξ",
+        "The threshold u"
+      ],
+      "answer": 2,
+      "explanation": "The tail index ξ has the same interpretation and value in both the GEV and generalized Pareto (POT-based) distributions."
+    },
+    {
+      "q": "The primary reason extreme values are difficult to model is:",
+      "choices": [
+        "They occur too frequently to track accurately",
+        "Standard distributions fit to the bulk of the data describe the center well but not necessarily the tail, and extreme events are too rare to provide many calibration observations",
+        "Extreme values always follow a normal distribution",
+        "Extreme values are not relevant to financial risk management"
+      ],
+      "answer": 1,
+      "explanation": "Distributions are typically chosen based on how well they fit central-tendency data, which doesn't guarantee a good fit in the tail — and the rarity of extreme events leaves few observations to check this against."
+    },
+    {
+      "q": "What new concept does multivariate EVT introduce that is not present in univariate EVT?",
+      "choices": [
+        "The tail index ξ",
+        "Tail dependence — the tendency for extreme values in different variables to occur together",
+        "The scale parameter β",
+        "The central limit theorem"
+      ],
+      "answer": 1,
+      "explanation": "Multivariate EVT's central concept is tail dependence: how extreme outcomes in one variable relate to extreme outcomes in others."
+    },
+    {
+      "q": "Why are elliptical distributions and covariance matrices considered inadequate for modeling multivariate extreme values?",
+      "choices": [
+        "They cannot be computed for more than two variables",
+        "They describe average co-movement and impose a symmetric dependence structure, which fails to capture tail-specific dependence; extreme value copulas are needed instead",
+        "They require too much historical data to be practical",
+        "They are only valid for normally distributed single variables and cannot be extended"
+      ],
+      "answer": 1,
+      "explanation": "Covariance-based and elliptical-distribution approaches summarize average dependence and assume symmetry, but tail dependence is specifically about behavior in the joint extremes, which requires extreme value (EV) copulas."
+    },
+    {
+      "q": "If a univariate extreme event is defined as one that occurs on average once every 50 observations, and two variables are independent, how often would a joint extreme event (both variables extreme simultaneously) be expected to occur?",
+      "choices": [
+        "Once every 50 observations",
+        "Once every 100 observations",
+        "Once every 2,500 observations",
+        "Once every 10,000 observations"
+      ],
+      "answer": 2,
+      "explanation": "For independent variables, joint extreme-event probabilities multiply: 1/50 × 1/50 = 1/2,500, so a joint extreme event is expected once every 2,500 observations."
+    }
+  ]
+}

@@ -42,3 +42,22 @@ bottom. Each entry: date, source file, what was created.
     Summary page and each learning-outcome page.
   - Moved the source PDF to `raw/market-risk/processed/` and recorded its
     sha256 hash, lesson number, and output paths in `sync_state.json`.
+
+## 2026-06-13
+
+- Ingested `R3_Parametric_Approaches_II_Extreme_Value.pdf` (Reading 3,
+  lesson 3) from `raw/market-risk/`:
+  - Wrote `wiki/market-risk/R3 - Parametric Approaches (II) - Extreme Value/`
+    with `Summary.md`, `Formulas.md`, `_INDEX.md`, and one page per learning
+    outcome (`Managing Extreme Values.md`, `Extreme Value Theory and the GEV
+    Distribution.md`, `Peaks-Over-Threshold Approach.md`, `Comparing GEV and
+    POT Approaches.md`, `Generalized Pareto Distribution and Extreme
+    VaR.md`, `Multivariate Extreme Value Theory.md`).
+  - Generated `quiz/data/market-risk/lesson3.json` (15 flashcards, 15
+    questions); added it to `quiz/data/manifest.json` and
+    `wiki/market-risk/_INDEX.md`.
+  - Updated the root `_INDEX.md` under `market-risk` with a link to the
+    Summary page and each learning-outcome page.
+  - Moved the source PDF to `raw/market-risk/processed/` and recorded its
+    sha256 hash, lesson number, and output paths in `sync_state.json`.
+

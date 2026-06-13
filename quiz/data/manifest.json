@@ -1,7 +1,8 @@
 {
   "market-risk": [
     { "lesson": 1, "title": "Estimating Market Risk Measures: An Introduction and Overview", "file": "data/market-risk/lesson1.json" },
-    { "lesson": 2, "title": "Non-Parametric Approaches", "file": "data/market-risk/lesson2.json" }
+    { "lesson": 2, "title": "Non-Parametric Approaches", "file": "data/market-risk/lesson2.json" },
+    { "lesson": 3, "title": "Parametric Approaches (II): Extreme Value", "file": "data/market-risk/lesson3.json" }
   ],
   "credit-risk": [],
   "operational-risk": [],

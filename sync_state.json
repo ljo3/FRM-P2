@@ -14,5 +14,13 @@
     "title": "Non-Parametric Approaches",
     "wiki": "wiki/market-risk/R2 - Non-Parametric Approaches/",
     "quiz": "quiz/data/market-risk/lesson2.json"
+  },
+  "market-risk/R3_Parametric_Approaches_II_Extreme_Value.pdf": {
+    "sha256": "cb10ba997099bdf57c010e2d4e21d7e082c96714f4b9442f669851a2140434b9",
+    "processed_at": "2026-06-13",
+    "lesson": 3,
+    "title": "Parametric Approaches (II): Extreme Value",
+    "wiki": "wiki/market-risk/R3 - Parametric Approaches (II) - Extreme Value/",
+    "quiz": "quiz/data/market-risk/lesson3.json"
   }
 }

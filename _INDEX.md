@@ -1,6 +1,6 @@
 ---
 title: Index
-updated: 2026-06-12
+updated: 2026-06-13
 ---
 
 # FRM Part 2 — Study Wiki Index
@@ -28,6 +28,13 @@ concept/model, an entity/people page where relevant, and a formulas page.
   - [[Non-Parametric Density Estimation]] (LO 2.b)
   - [[Weighted Historical Simulation Approaches]] (LO 2.c)
   - [[Non-Parametric Methods - Pros and Cons]] (LO 2.d)
+- Lesson 3: [[market-risk/R3 - Parametric Approaches (II) - Extreme Value/Summary|Parametric Approaches (II): Extreme Value]]
+  - [[Managing Extreme Values]] (LO 3.a)
+  - [[Extreme Value Theory and the GEV Distribution]] (LO 3.b)
+  - [[Peaks-Over-Threshold Approach]] (LO 3.c)
+  - [[Comparing GEV and POT Approaches]] (LO 3.d)
+  - [[Generalized Pareto Distribution and Extreme VaR]] (LO 3.e)
+  - [[Multivariate Extreme Value Theory]] (LO 3.f)
 
 ## credit-risk — Credit Risk Measurement and Management
 
