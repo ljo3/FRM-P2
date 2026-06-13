@@ -24,6 +24,18 @@ quiz/                Static HTML/CSS/JS quiz app for Cloudflare Pages.
   app.js
   data/              Generated quiz/flashcard JSON, mirrored by topic.
     manifest.json    Catalog of all lessons (the app reads this on load).
+study-guide/         Interactive local-only study guide (gitignored — never
+                     committed or deployed). Sequential "why this matters +
+                     deep dive" walkthrough per learning outcome, with
+                     progress tracked in browser localStorage.
+  index.html
+  styles.css
+  app.js
+  manifest.json      Catalog of topics/lessons, nested by topic (different
+                     shape from quiz/data/manifest.json's flat per-topic
+                     arrays — see INGEST step 5).
+  <TOPIC>/
+    lesson<N>.json   Per-LO content: { intro: {why, content}, los: [...] }.
 _INDEX.md            Master catalog of all wiki pages, grouped by topic.
 log.md               Append-only chronological record of every ingest.
 sync_state.json      Hash-tracked record of every source file ingested.
@@ -31,7 +43,7 @@ sync_state.json      Hash-tracked record of every source file ingested.
 
 Each `raw/<TOPIC>/` folder also gets a `processed/` subfolder the first time a
 file from that topic is ingested — processed source PDFs are moved there
-(see step 7 below).
+(see step 9 below).
 
 ## Topic folders
 
@@ -139,29 +151,85 @@ ingest new files).
    - Each `questions[].choices` array should have exactly 4 entries, with
      `answer` being the 0-based index of the correct one.
 
-4. **Update `quiz/data/manifest.json`**: add or update this topic's array
-   with an entry for the lesson:
+4. **Generate study-guide content** at `study-guide/<TOPIC>/lesson<N>.json`.
+   This folder is gitignored and never published, but generate it for every
+   ingested reading anyway so the local study guide stays in sync with the
+   wiki/quiz. Schema:
    ```json
-   { "lesson": <N>, "title": "<chapter title>", "file": "data/<TOPIC>/lesson<N>.json" }
+   {
+     "topic": "<TOPIC>",
+     "lesson": <N>,
+     "title": "<chapter title>",
+     "intro": { "why": "...", "content": "<p>...</p>..." },
+     "los": [
+       {
+         "id": "<Na>",
+         "lo": "LO <N>.<x> — <LO statement>",
+         "title": "<short LO title>",
+         "why": "...",
+         "keyIdea": "...",
+         "content": "<h4>...</h4><p>...</p>...",
+         "formula": "<div class='formula'>...</div>",
+         "takeaways": ["...", "...", "...", "..."]
+       }
+     ]
+   }
    ```
-   If an entry for this `lesson` number already exists under this topic
-   (re-ingest), replace it in place rather than duplicating.
+   - `intro.why` and each `los[].why`: a fresh 2-4 sentence "why this
+     matters" framing — big-picture motivation/intuition, written from
+     scratch (not paraphrased from the source's framing).
+   - `los[].content`: a condensed, paraphrased deep-dive drawn from the
+     corresponding wiki learning-outcome page — the same copyright rules as
+     wiki pages apply. Rewrite any `[[wikilinks]]` from the wiki page as
+     plain `<strong>`/`<em>` text (this app has no cross-page links).
+   - `los[].keyIdea`: one-sentence distillation of the core idea.
+   - `los[].formula`: optional — include only if the LO has a key formula
+     worth isolating; omit the field entirely otherwise.
+   - `los[].takeaways`: 3-5 short bullet strings — the "if you remember
+     nothing else" points for this LO.
+   - `los[].id` should match the LO numbering used in the wiki/quiz (e.g.
+     `1a`, `1b`, ... for lesson 1's learning outcomes).
+   - Validate the file is valid JSON (e.g.
+     `python3 -c "import json; json.load(open(f))"`) before moving on.
 
-5. **Refresh `_INDEX.md`** (project root): under the matching topic heading,
+5. **Update manifests**:
+   - `quiz/data/manifest.json` — add or update this topic's array with an
+     entry for the lesson:
+     ```json
+     { "lesson": <N>, "title": "<chapter title>", "file": "data/<TOPIC>/lesson<N>.json" }
+     ```
+   - `study-guide/manifest.json` — add or update this topic's entry:
+     ```json
+     {
+       "<TOPIC>": {
+         "title": "<Topic Title>",
+         "lessons": [
+           { "lesson": <N>, "title": "<chapter title>", "file": "<TOPIC>/lesson<N>.json" }
+         ]
+       }
+     }
+     ```
+     If the topic key doesn't exist yet, create it (use the topic's title
+     from the table above).
+   - In both files, if an entry for this `lesson` number already exists under
+     this topic (re-ingest), replace it in place rather than duplicating.
+
+6. **Refresh `_INDEX.md`** (project root): under the matching topic heading,
    add/update a bullet linking to the new lesson's `Summary` page (and
    optionally its learning-outcome pages) using `[[wikilinks]]`.
 
-6. **Refresh folder indexes**: add/update a bullet in
+7. **Refresh folder indexes**: add/update a bullet in
    `wiki/<TOPIC>/_INDEX.md` linking to this reading's `_INDEX.md`, e.g.
    `[R<N> — <Chapter Title>](<R<N> - Chapter Title/_INDEX.md>)` (wrap the
    destination in `<...>` since the folder name has spaces). `wiki/_INDEX.md`
    (the top-level topic list) only needs touching if a new topic folder is
    introduced.
 
-7. **Append to `log.md`**: a new entry with the date, source filename, and a
-   short list of wiki pages and quiz files created/updated.
+8. **Append to `log.md`**: a new entry with the date, source filename, and a
+   short list of wiki pages, quiz files, and study-guide files
+   created/updated.
 
-8. **Mark the source as processed:**
+9. **Mark the source as processed:**
    - Move `raw/<TOPIC>/<file>` to `raw/<TOPIC>/processed/<file>` (creating
      `processed/` if needed). This is the one exception to "never modify
      `raw/`" — the file's bytes are untouched, only its location changes.
@@ -174,7 +242,8 @@ ingest new files).
          "lesson": <N>,
          "title": "<chapter title>",
          "wiki": "wiki/<TOPIC>/R<N> - <Chapter Title>/",
-         "quiz": "quiz/data/<TOPIC>/lesson<N>.json"
+         "quiz": "quiz/data/<TOPIC>/lesson<N>.json",
+         "study_guide": "study-guide/<TOPIC>/lesson<N>.json"
        }
      }
      ```
@@ -206,3 +275,24 @@ fetches the referenced lesson JSON files on demand.
 
 After adding or editing anything under `quiz/data/`, no build step is
 required — the app reads the JSON directly at runtime.
+
+## Study guide app
+
+`study-guide/index.html` + `study-guide/styles.css` + `study-guide/app.js`
+form a second static site, local-only and gitignored (never committed or
+deployed). It reads `study-guide/manifest.json`, then fetches each topic's
+`lesson<N>.json` files on demand.
+
+- Each reading contributes one "Overview" step (from `intro`) followed by one
+  step per learning outcome (from `los[]`), flattened into a single per-topic
+  sequence that Next/Previous walk through (crossing lesson boundaries within
+  a topic).
+- Each step shows: why it matters, an optional one-line key idea, the
+  deep-dive `content`, an optional `formula` block, and a `takeaways` list.
+- A "Mark as understood" checkbox persists per-step progress to
+  `localStorage` (key `frm-study-guide-progress`), shown via checkmarks in
+  the sidebar and progress bars on the home view. A footer link resets all
+  progress.
+- After adding or editing anything under `study-guide/`, no build step is
+  required — open `study-guide/index.html` directly or serve the folder with
+  any static file server.
