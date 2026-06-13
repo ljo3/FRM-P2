@@ -48,6 +48,13 @@ concept/model, an entity/people page where relevant, and a formulas page.
   - [[Stress Testing via Mapping]] (LO 5.e)
   - [[Benchmarking and Tracking Error VaR]] (LO 5.f)
   - [[Mapping Forwards, Swaps, and Options]] (LO 5.g)
+- Lesson 6: [[market-risk/R6 - Messages from the Academic Literature on Risk Measurement for the Trading Book/Summary|Messages from the Academic Literature on Risk Measurement for the Trading Book]]
+  - [[VaR Implementation Lessons]] (LO 6.a)
+  - [[Liquidity Risk and LVaR]] (LO 6.b)
+  - [[VaR vs Expected Shortfall and Spectral Risk Measures]] (LO 6.c)
+  - [[Unified vs Compartmentalized Risk Measurement]] (LO 6.d)
+  - [[Top-Down and Bottom-Up Risk Aggregation]] (LO 6.e)
+  - [[Leverage, Balance Sheet Management, and Procyclicality]] (LO 6.f)
 
 ## credit-risk — Credit Risk Measurement and Management
 

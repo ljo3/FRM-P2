@@ -38,5 +38,13 @@
     "title": "VaR Mapping",
     "wiki": "wiki/market-risk/R5 - VaR Mapping/",
     "quiz": "quiz/data/market-risk/lesson5.json"
+  },
+  "market-risk/R6_Messages_from_Academic_Literature_Trading_Book.pdf": {
+    "sha256": "fe30ddcac3738ee16c652bed0e8d7675924283d7ef1c2e45e4745616ed1caf5c",
+    "processed_at": "2026-06-13",
+    "lesson": 6,
+    "title": "Messages from the Academic Literature on Risk Measurement for the Trading Book",
+    "wiki": "wiki/market-risk/R6 - Messages from the Academic Literature on Risk Measurement for the Trading Book/",
+    "quiz": "quiz/data/market-risk/lesson6.json"
   }
 }

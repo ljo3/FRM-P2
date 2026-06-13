@@ -92,3 +92,22 @@ bottom. Each entry: date, source file, what was created.
   - Moved the source PDF to `raw/market-risk/processed/` and recorded its
     sha256 hash, lesson number, and output paths in `sync_state.json`.
 
+- Ingested `R6_Messages_from_Academic_Literature_Trading_Book.pdf`
+  (Reading 6, lesson 6) from `raw/market-risk/`:
+  - Wrote `wiki/market-risk/R6 - Messages from the Academic Literature on
+    Risk Measurement for the Trading Book/` with `Summary.md`,
+    `Formulas.md`, `_INDEX.md`, and one page per learning outcome (`VaR
+    Implementation Lessons.md`, `Liquidity Risk and LVaR.md`, `VaR vs
+    Expected Shortfall and Spectral Risk Measures.md`, `Unified vs
+    Compartmentalized Risk Measurement.md`, `Top-Down and Bottom-Up Risk
+    Aggregation.md`, `Leverage, Balance Sheet Management, and
+    Procyclicality.md`).
+  - Generated `quiz/data/market-risk/lesson6.json` (17 flashcards, 22
+    questions — above the usual 10-15 range, reflecting this lesson's six
+    learning outcomes); added it to `quiz/data/manifest.json` and
+    `wiki/market-risk/_INDEX.md`.
+  - Updated the root `_INDEX.md` under `market-risk` with a link to the
+    Summary page and each learning-outcome page.
+  - Moved the source PDF to `raw/market-risk/processed/` and recorded its
+    sha256 hash, lesson number, and output paths in `sync_state.json`.
+

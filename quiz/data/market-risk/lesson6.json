@@ -1,0 +1,319 @@
+{
+  "topic": "market-risk",
+  "lesson": 6,
+  "title": "Messages from the Academic Literature on Risk Measurement for the Trading Book",
+  "flashcards": [
+    {
+      "front": "What two portfolio characteristics determine the appropriate time horizon for a VaR calculation?",
+      "back": "The purpose of the risk measurement (e.g., setting trading limits vs. sizing economic capital) and the liquidity of the portfolio being measured."
+    },
+    {
+      "front": "Why does the financial industry tend to favor short VaR horizons (such as 1 day)?",
+      "back": "Short horizons are computationally cheaper to calculate for large, complex portfolios, even though a fixed short horizon (e.g., the Basel 10-day convention) is not optimal for every portfolio."
+    },
+    {
+      "front": "What happens to VaR accuracy if time-varying volatility is ignored?",
+      "back": "Risk tends to be underestimated, because the model relies on an average volatility level instead of reflecting current conditions."
+    },
+    {
+      "front": "Why is backtesting less informative over longer VaR horizons?",
+      "back": "Longer horizons mean fewer independent observations and greater portfolio instability over each observation period, both of which weaken the statistical power and interpretability of the backtest."
+    },
+    {
+      "front": "What is exogenous liquidity risk, and how is it captured in a VaR-type measure?",
+      "back": "It is the market-wide, position-size-independent cost of trading (the bid/ask spread). It is captured through liquidity-adjusted VaR (LVaR), which adds a liquidity cost on top of the standard VaR estimate."
+    },
+    {
+      "front": "What is endogenous liquidity risk, and what does it depend on?",
+      "back": "It is the additional price impact caused by the size of a trader's own order relative to market depth -- essentially the sensitivity of price to trading volume. It depends on trade size and is most visible when liquidity risk is already elevated."
+    },
+    {
+      "front": "Between exogenous and endogenous liquidity, which does academic research suggest should be addressed first in risk valuation models?",
+      "back": "Endogenous liquidity, because it reflects a cost driven by the institution's own position sizes and can become severe quickly, especially for complex or thinly traded positions."
+    },
+    {
+      "front": "What are the two main drawbacks of VaR as a risk measure?",
+      "back": "It ignores the severity of losses beyond the VaR threshold (the tail), and it is not subadditive -- the VaR of a combined portfolio can exceed the sum of the VaRs of its individual components."
+    },
+    {
+      "front": "How does expected shortfall (ES) address VaR's two main drawbacks?",
+      "back": "ES accounts for the magnitude of losses beyond the VaR threshold (not just whether the threshold is breached), and it is always subadditive, consistent with diversification not increasing risk."
+    },
+    {
+      "front": "How do spectral risk measures relate to expected shortfall?",
+      "back": "Spectral risk measures generalize expected shortfall by applying a weighting function across the loss distribution that can reflect an investor's specific risk aversion; expected shortfall is the special case with equal weighting across the tail."
+    },
+    {
+      "front": "What is the difference between a compartmentalized and a unified (integrated) approach to risk measurement?",
+      "back": "A compartmentalized approach sums risks computed separately for each risk category; a unified approach models all risk categories jointly and captures the interactions between them."
+    },
+    {
+      "front": "Is the Basel regulatory capital framework an integrated or non-integrated approach, and why?",
+      "back": "It is non-integrated (compartmentalized) -- it sums Pillar 1 capital requirements for market, credit, and operational risk (plus Pillar 2 add-ons) without explicitly modeling interactions between these risk categories."
+    },
+    {
+      "front": "What does a diversification ratio (integrated capital / separate capital) less than one indicate, versus greater than one?",
+      "back": "A ratio less than one indicates diversification benefits (the compartmentalized sum overstates risk); a ratio greater than one indicates risk compounding (the compartmentalized sum understates risk)."
+    },
+    {
+      "front": "How do top-down and bottom-up studies generally compare in their findings on the diversification ratio?",
+      "back": "Top-down studies generally find ratios less than one (diversification). Bottom-up studies often also find ratios less than one, but the evidence is inconclusive, with some recent studies finding ratios greater than one (compounding)."
+    },
+    {
+      "front": "Why does separate measurement of market risk and credit risk most likely provide an upper bound on the integrated capital level?",
+      "back": "Because most evidence suggests diversification benefits exist between market and credit risk, so ignoring their interaction and adding the two separately computed figures tends to produce a capital figure at least as large as the true integrated figure."
+    },
+    {
+      "front": "How is leverage related to the market value of a firm's assets?",
+      "back": "Leverage (total assets / equity) is inversely related to the market value of assets: when asset values rise, equity rises and leverage falls; when asset values fall, equity falls and leverage rises."
+    },
+    {
+      "front": "What is the paradox raised about VaR-based regulation and procyclicality?",
+      "back": "Although intended to limit risk-taking, increasingly sophisticated VaR-based capital requirements can amplify boom-and-bust cycles and increase, rather than decrease, overall risk in financial markets."
+    }
+  ],
+  "questions": [
+    {
+      "q": "According to this reading, what primarily determines the appropriate time horizon for a VaR estimate?",
+      "choices": [
+        "The purpose of the risk measurement and the liquidity of the portfolio",
+        "A fixed 10-day horizon mandated for all portfolios",
+        "The number of historical observations available",
+        "The currency denomination of the portfolio"
+      ],
+      "answer": 0,
+      "explanation": "There is no universally accepted time horizon; the right choice depends on why the VaR is being computed (e.g., trading limits vs. economic capital) and how liquid the underlying portfolio is."
+    },
+    {
+      "q": "Why is VaR backtesting considered less effective over longer time horizons?",
+      "choices": [
+        "Portfolio instability over longer horizons undermines the comparability of realized outcomes to the original VaR estimate",
+        "Longer horizons produce too many exceptions to analyze",
+        "Backtesting is only defined for one-day horizons by regulation",
+        "Longer horizons eliminate the need for time-varying volatility adjustments"
+      ],
+      "answer": 0,
+      "explanation": "Over longer horizons, the portfolio's composition is likely to change, so a backtesting exception may reflect a changed portfolio rather than a flaw in the original VaR model, and fewer independent observations are available."
+    },
+    {
+      "q": "A risk model that incorporates time-varying volatility tends to produce VaR estimates that are more realistic but also:",
+      "choices": [
+        "More procyclical and potentially less stable due to estimation issues",
+        "Always lower than VaR estimates from static-volatility models",
+        "Immune to backtesting exceptions",
+        "Unaffected by changes in correlation"
+      ],
+      "answer": 0,
+      "explanation": "Incorporating time-varying volatility makes VaR react more to current conditions, which tends to generate procyclical VaR measures and can introduce instability from frequent re-estimation."
+    },
+    {
+      "q": "Exogenous liquidity risk is best described as:",
+      "choices": [
+        "Market-specific, average transaction costs reflected in the bid/ask spread, captured via liquidity-adjusted VaR",
+        "The price impact caused specifically by the size of a trader's own order",
+        "A risk measure that only applies to exotic or complex positions",
+        "The risk that a counterparty will default on a liquidity facility"
+      ],
+      "answer": 0,
+      "explanation": "Exogenous liquidity reflects market-wide transaction costs (the bid/ask spread) independent of any individual trader's position size, and is incorporated into VaR through the LVaR adjustment."
+    },
+    {
+      "q": "Endogenous liquidity risk depends most directly on:",
+      "choices": [
+        "The size of the trade relative to the market's depth",
+        "The general bid/ask spread observed for small trades",
+        "The credit rating of the counterparty",
+        "The time horizon used for VaR, regardless of trade size"
+      ],
+      "answer": 0,
+      "explanation": "Endogenous liquidity reflects the price impact of the trader's own order -- it is the elasticity of price to trading volume, and grows as trade size increases relative to typical market depth."
+    },
+    {
+      "q": "According to academic studies referenced in this reading, when adapting a risk valuation model for liquidity, which type of liquidity should be addressed first?",
+      "choices": [
+        "Endogenous liquidity",
+        "Exogenous liquidity",
+        "Neither -- liquidity risk should not be integrated into VaR models",
+        "Whichever type produces the smaller adjustment"
+      ],
+      "answer": 0,
+      "explanation": "The reading states that academic studies suggest risk valuation models should first account for the impact of endogenous liquidity, since it is driven by the institution's own position sizes and can become severe quickly."
+    },
+    {
+      "q": "A 'flight to quality' during stressed markets is most directly linked to which liquidity concept?",
+      "choices": [
+        "It worsens endogenous liquidity risk by reducing the pool of buyers for thinly traded assets",
+        "It eliminates exogenous liquidity costs entirely",
+        "It converts endogenous liquidity risk into exogenous liquidity risk",
+        "It has no effect on either type of liquidity risk"
+      ],
+      "answer": 0,
+      "explanation": "When investors collectively shift toward safer, more liquid assets, holders of thinly traded or complex positions find it harder to unwind those positions, amplifying endogenous liquidity costs."
+    },
+    {
+      "q": "Which of the following is a key weakness of value at risk (VaR) as a risk measure?",
+      "choices": [
+        "It does not consider the severity of losses beyond the VaR threshold",
+        "It is always subadditive",
+        "It cannot be computed for any portfolio with more than one asset",
+        "It requires more computation than expected shortfall"
+      ],
+      "answer": 0,
+      "explanation": "VaR identifies a loss threshold at a given confidence level but provides no information about how bad losses could be beyond that threshold."
+    },
+    {
+      "q": "What does it mean for a risk measure to be 'subadditive', and how does VaR compare to expected shortfall on this property?",
+      "choices": [
+        "Subadditivity means the risk of a combined portfolio should not exceed the sum of the risks of its parts; VaR can violate this, while expected shortfall always satisfies it",
+        "Subadditivity means risk measures must be computed using historical simulation; both VaR and expected shortfall satisfy this",
+        "Subadditivity means a risk measure must equal zero for a fully hedged portfolio; neither VaR nor expected shortfall satisfies this",
+        "Subadditivity means the risk measure decreases as the confidence level increases; VaR always satisfies this, but expected shortfall does not"
+      ],
+      "answer": 0,
+      "explanation": "A coherent (subadditive) risk measure never penalizes diversification with a higher combined risk figure. VaR is not always subadditive, whereas expected shortfall always is."
+    },
+    {
+      "q": "Compared to VaR, expected shortfall has which of the following characteristics?",
+      "choices": [
+        "It accounts for the magnitude of losses beyond the VaR threshold and reduces sensitivity to the chosen confidence level",
+        "It is simpler and less computationally intensive than VaR",
+        "It is not subadditive, unlike VaR",
+        "It cannot be applied to portfolios with fat-tailed return distributions"
+      ],
+      "answer": 0,
+      "explanation": "Expected shortfall averages losses within the tail beyond the VaR threshold, which both captures tail severity and makes risk rankings less sensitive to the specific confidence level chosen, though at the cost of greater computational complexity."
+    },
+    {
+      "q": "Spectral risk measures generalize expected shortfall primarily by:",
+      "choices": [
+        "Applying a weighting function across the loss distribution that can reflect an investor's specific risk aversion",
+        "Replacing the loss distribution with a normal distribution",
+        "Ignoring losses beyond the VaR threshold entirely",
+        "Requiring a fixed 99% confidence level for all calculations"
+      ],
+      "answer": 0,
+      "explanation": "Spectral risk measures use a general weighting function over outcomes; expected shortfall is the special case where the tail region receives equal weight and everything else receives zero weight."
+    },
+    {
+      "q": "Which of the following is one of the three primary types of stress-testing exercises described in this reading?",
+      "choices": [
+        "Mechanical-search stress tests using automated routines to explore risk-factor changes",
+        "Bootstrap historical simulation stress tests",
+        "Volatility-weighted stress tests",
+        "Filtered historical simulation stress tests"
+      ],
+      "answer": 0,
+      "explanation": "The three types described are historical scenarios, predefined scenarios, and mechanical-search stress tests; the latter use automated routines to cover possible risk-factor changes."
+    },
+    {
+      "q": "What unreasonable assumption is commonly embedded in stress-testing exercises, according to this reading?",
+      "choices": [
+        "That market shocks occur instantly and traders cannot re-hedge or adjust positions",
+        "That correlations remain unchanged during stress",
+        "That VaR is always subadditive under stress",
+        "That liquidity risk disappears during stress periods"
+      ],
+      "answer": 0,
+      "explanation": "Stress tests often assume an instantaneous shock with a frozen portfolio, ignoring the possibility that traders would react and adjust their positions as the scenario unfolds."
+    },
+    {
+      "q": "How does a compartmentalized approach to risk measurement differ from a unified (integrated) approach?",
+      "choices": [
+        "A compartmentalized approach sums separately computed risk measures, while a unified approach models the interaction among risk categories",
+        "A compartmentalized approach is used only for credit risk, while a unified approach is used only for market risk",
+        "A unified approach always produces a smaller capital figure than a compartmentalized approach",
+        "A compartmentalized approach requires Monte Carlo simulation, while a unified approach does not"
+      ],
+      "answer": 0,
+      "explanation": "Compartmentalized measurement treats each risk category independently and adds the results; a unified approach considers all risk categories together, capturing compounding or diversification effects between them."
+    },
+    {
+      "q": "Is the overall Basel approach to calculating capital requirements integrated or non-integrated, and why?",
+      "choices": [
+        "Non-integrated -- it sums capital requirements for individual risk categories without modeling their interactions",
+        "Integrated -- it explicitly models correlations between market, credit, and operational risk",
+        "Integrated -- it uses a single joint distribution across all Pillar 1 and Pillar 2 risks",
+        "Non-integrated -- it ignores operational risk entirely"
+      ],
+      "answer": 0,
+      "explanation": "The Basel building-block approach sums separately calculated capital requirements for each risk category, making it a non-integrated (compartmentalized) approach to risk measurement."
+    },
+    {
+      "q": "In the diversification ratio (unified capital / compartmentalized capital), a ratio greater than one indicates:",
+      "choices": [
+        "Risk compounding, meaning the compartmentalized approach understates true risk",
+        "Risk diversification, meaning the compartmentalized approach overstates true risk",
+        "That the bank has no operational risk exposure",
+        "That market risk and credit risk are perfectly uncorrelated"
+      ],
+      "answer": 0,
+      "explanation": "A ratio above one means the integrated (unified) capital figure exceeds the simple sum of separately computed figures, indicating that risks compound rather than diversify -- so adding them separately understates true risk."
+    },
+    {
+      "q": "How do top-down studies' findings on the diversification ratio generally compare to bottom-up studies' findings?",
+      "choices": [
+        "Top-down studies generally find ratios below one, while bottom-up evidence is mixed, with some recent studies finding ratios above one",
+        "Top-down studies generally find ratios above one, while bottom-up studies always find ratios below one",
+        "Both approaches always agree on a ratio below one with no exceptions",
+        "Neither approach has produced any usable diversification ratio estimates"
+      ],
+      "answer": 0,
+      "explanation": "Top-down research consistently finds diversification (ratio < 1), while bottom-up research often finds the same but has produced inconclusive results, including some recent evidence of compounding (ratio > 1)."
+    },
+    {
+      "q": "Most academic studies suggest that market risk and credit risk should be:",
+      "choices": [
+        "Considered jointly, because separate measurement most likely overstates the integrated capital requirement",
+        "Considered jointly, because separate measurement most likely understates the integrated capital requirement",
+        "Always measured separately, since they never interact",
+        "Ignored in favor of operational risk measurement alone"
+      ],
+      "answer": 0,
+      "explanation": "Because diversification benefits between market and credit risk are generally found, separate measurement and addition of the two tends to produce an upper bound -- i.e., it overstates -- on the true integrated capital level."
+    },
+    {
+      "q": "If a bank's exposures cannot be completely separated into distinct risk categories, what is the implication for the compartmentalized approach?",
+      "choices": [
+        "It is not conservative enough and may lead to an underestimation of overall risk",
+        "It remains perfectly accurate regardless of separation",
+        "It automatically converts into a unified approach",
+        "It eliminates the need for Pillar 2 capital add-ons"
+      ],
+      "answer": 0,
+      "explanation": "When risks cannot be cleanly separated, summing individually computed risk figures can miss risk that falls between categories, causing the compartmentalized total to understate true overall risk."
+    },
+    {
+      "q": "How is leverage (total assets / equity) related to the market value of a firm's assets?",
+      "choices": [
+        "Inversely -- rising asset values increase equity and reduce leverage, while falling asset values decrease equity and increase leverage",
+        "Directly -- rising asset values always increase leverage proportionally",
+        "There is no relationship between leverage and asset values",
+        "Leverage only changes when liabilities change, never when asset values change"
+      ],
+      "answer": 0,
+      "explanation": "Since equity absorbs gains and losses in asset value, a rise in asset values increases equity (lowering leverage), and a fall in asset values decreases equity (raising leverage)."
+    },
+    {
+      "q": "In the cyclical feedback loop described for active balance sheet management, what happens when asset prices rise?",
+      "choices": [
+        "Leverage falls below target, prompting additional asset purchases that can push prices higher still",
+        "Leverage rises above target, prompting asset sales that push prices lower",
+        "The VaR constraint tightens immediately, forcing deleveraging",
+        "Equity decreases, triggering a flight to quality"
+      ],
+      "answer": 0,
+      "explanation": "Rising asset prices increase equity, which lowers leverage below the institution's target; to restore the target, the institution buys more assets, which can reinforce the upward price movement."
+    },
+    {
+      "q": "What broader paradox does this reading raise about VaR-based capital regulation?",
+      "choices": [
+        "Although intended to limit risk-taking, it can amplify boom-and-bust cycles and increase overall financial market risk",
+        "VaR-based regulation eliminates procyclicality entirely once time-varying volatility is incorporated",
+        "VaR-based regulation has no effect on bank leverage decisions",
+        "VaR-based regulation only applies to operational risk, not market or credit risk"
+      ],
+      "answer": 0,
+      "explanation": "Because VaR-based constraints relax in booms and tighten in busts, regulations built around VaR can reinforce procyclical leverage adjustments, amplifying rather than dampening financial and economic fluctuations."
+    }
+  ]
+}
