@@ -5,7 +5,8 @@
     { "lesson": 3, "title": "Parametric Approaches (II): Extreme Value", "file": "data/market-risk/lesson3.json" },
     { "lesson": 4, "title": "Backtesting VaR", "file": "data/market-risk/lesson4.json" },
     { "lesson": 5, "title": "VaR Mapping", "file": "data/market-risk/lesson5.json" },
-    { "lesson": 6, "title": "Messages from the Academic Literature on Risk Measurement for the Trading Book", "file": "data/market-risk/lesson6.json" }
+    { "lesson": 6, "title": "Messages from the Academic Literature on Risk Measurement for the Trading Book", "file": "data/market-risk/lesson6.json" },
+    { "lesson": 7, "title": "Correlation Basics: Definitions, Applications, and Terminology", "file": "data/market-risk/lesson7.json" }
   ],
   "credit-risk": [],
   "operational-risk": [],

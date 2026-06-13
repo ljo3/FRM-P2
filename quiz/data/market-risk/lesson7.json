@@ -1,0 +1,234 @@
+{
+  "topic": "market-risk",
+  "lesson": 7,
+  "title": "Correlation Basics: Definitions, Applications, and Terminology",
+  "flashcards": [
+    {
+      "front": "What is correlation risk?",
+      "back": "The risk of financial loss arising from adverse changes in the correlation between two or more financial or nonfinancial variables, even if the variables themselves do not behave unusually."
+    },
+    {
+      "front": "What is the difference between static and dynamic financial correlation measures?",
+      "back": "Static measures describe correlation as a fixed snapshot for a given period (e.g., a VaR covariance matrix, CDO copula correlations, the binomial default correlation model). Dynamic measures capture how correlation evolves over time (e.g., pairs trading, deterministic or stochastic correlation models)."
+    },
+    {
+      "front": "What is wrong-way risk (WWR) in the context of a credit default swap?",
+      "back": "WWR arises when the protection seller's default probability is positively correlated with the reference entity's default probability, so the protection is most likely to fail exactly when the buyer needs it most."
+    },
+    {
+      "front": "How does the correlation coefficient relate to covariance?",
+      "back": "The correlation coefficient equals covariance divided by the product of the two assets' standard deviations, which standardizes covariance into a value between -1 and +1."
+    },
+    {
+      "front": "For most multi-asset (correlation) options, how does a lower correlation between the underlying assets affect the option's price?",
+      "back": "It increases the price, because lower correlation makes a wider spread between the two underlying assets more likely, and most correlation-option payoffs reward that divergence."
+    },
+    {
+      "front": "What drives the value of an exchange option with payoff max(0, S2 - S1)?",
+      "back": "The implied volatility of the ratio S2/S1, which rises as the correlation between S1 and S2 falls -- so the exchange option becomes more valuable as correlation declines and approaches zero value as correlation approaches 1."
+    },
+    {
+      "front": "How does correlation between a foreign index and the relevant exchange rate affect the price of a quanto option?",
+      "back": "Lower correlation between the foreign asset and the exchange rate produces a higher quanto option price, because it increases the hedging cost and uncertainty faced by the option seller."
+    },
+    {
+      "front": "How is the payoff of a correlation swap calculated?",
+      "back": "Payoff to the buyer = notional amount x (realized correlation - fixed correlation rate). The buyer profits when realized correlation exceeds the fixed rate agreed at inception."
+    },
+    {
+      "front": "How is 'realized correlation' computed for a basket of more than two assets in a correlation swap?",
+      "back": "It is the simple average of all pairwise correlation coefficients among the assets in the basket, computed from their actual log returns over the swap's life."
+    },
+    {
+      "front": "How does correlation between portfolio assets affect VaR under the variance-covariance (delta-normal) method?",
+      "back": "Higher correlation between the assets increases portfolio volatility and therefore increases VaR; lower (or more negative) correlation reduces portfolio volatility and VaR."
+    },
+    {
+      "front": "How does the Basel Committee link a bank's trading-book capital charge to VaR?",
+      "back": "Banks must hold capital for trading-book positions equal to at least three times the 10-day VaR."
+    },
+    {
+      "front": "What role did the copula correlation model play in the 2007-2009 financial crisis?",
+      "back": "It was used to estimate the very large number of pairwise default correlations needed for CDOs (e.g., 7,750 pairs for a 125-asset CDO), but its assumptions about how tranche spreads would co-move turned out to be wrong, contributing to large losses for hedge funds holding hedged tranche positions."
+    },
+    {
+      "front": "What happened to U.S. stock correlations during the worst part of the 2008-2009 crisis?",
+      "back": "Average pairwise correlation among stocks rose from a pre-crisis level around 27% to over 50%, sharply reducing the diversification benefit of holding a broad portfolio of stocks right when it was needed most."
+    },
+    {
+      "front": "How is the concentration ratio defined, and what does a lower value indicate?",
+      "back": "Concentration ratio = 1 / (number of equally sized exposures). A lower concentration ratio indicates more diversified exposure and lower concentration risk."
+    },
+    {
+      "front": "For two loans of equal size with the same individual default probability, how does default correlation affect the expected loss under the joint-default (worst-case) scenario?",
+      "back": "Higher default correlation between the two borrowers increases the joint probability of both defaulting and therefore increases the expected loss; lower (down to zero) default correlation reduces the joint default probability and the expected loss, with perfectly correlated defaults (correlation = 1) behaving like a single concentrated loan."
+    }
+  ],
+  "questions": [
+    {
+      "q": "An investor holds bonds of Country A and notices that bonds of unrelated Country B, which historically moved independently, suddenly start losing value at the same time as Country A's bonds. This is best described as an example of:",
+      "choices": [
+        "Correlation risk",
+        "Liquidity risk",
+        "Operational risk",
+        "Settlement risk"
+      ],
+      "answer": 0,
+      "explanation": "A loss arising because the relationship (correlation) between two assets shifted -- rather than because either asset's own fundamentals changed -- is the definition of correlation risk."
+    },
+    {
+      "q": "Which of the following is best classified as a dynamic financial correlation measure rather than a static one?",
+      "choices": [
+        "A pairs-trading strategy that relies on a relationship between two securities evolving over time",
+        "The correlation assumption embedded in a one-period VaR covariance matrix",
+        "A copula correlation used to price a CDO tranche",
+        "A binomial default correlation model applied to a fixed time period"
+      ],
+      "answer": 0,
+      "explanation": "Pairs trading, deterministic correlation approaches, and stochastic correlation processes are dynamic measures because they describe how correlation evolves over time. VaR covariance matrices, CDO copula correlations, and binomial default correlation models are static, point-in-time measures."
+    },
+    {
+      "q": "An investor buys protection on a French government bond from a counterparty bank. If the probability of the counterparty bank defaulting is positively correlated with the probability of the French government defaulting, the investor faces:",
+      "choices": [
+        "Wrong-way risk",
+        "Right-way risk",
+        "Basis risk",
+        "Translation risk"
+      ],
+      "answer": 0,
+      "explanation": "Positive correlation between a protection seller's default probability and the reference entity's default probability is the definition of wrong-way risk -- the hedge is most likely to fail exactly when it is needed."
+    },
+    {
+      "q": "Two assets have a covariance of -0.12 and standard deviations of 0.40 and 0.35. The correlation coefficient between them is closest to:",
+      "choices": [
+        "-0.86",
+        "-0.12",
+        "0.86",
+        "-1.20"
+      ],
+      "answer": 0,
+      "explanation": "Correlation = covariance / (sigma_1 x sigma_2) = -0.12 / (0.40 x 0.35) = -0.12 / 0.14 ~= -0.857."
+    },
+    {
+      "q": "Holding all individual asset volatilities and weights fixed, decreasing the correlation between two assets in a portfolio will:",
+      "choices": [
+        "Decrease the portfolio's standard deviation and increase its return/risk ratio",
+        "Increase the portfolio's standard deviation and decrease its return/risk ratio",
+        "Leave the portfolio's standard deviation unchanged but increase its expected return",
+        "Increase both the portfolio's standard deviation and its expected return proportionally"
+      ],
+      "answer": 0,
+      "explanation": "Portfolio variance includes a term proportional to the covariance (correlation x both standard deviations). Lowering correlation lowers this term, reducing portfolio standard deviation and therefore raising the return/risk ratio (return divided by a smaller risk figure)."
+    },
+    {
+      "q": "A U.S. investor buys a quanto call on a foreign equity index with a fixed exchange rate for converting the payoff back to U.S. dollars. All else equal, the price of this quanto call will be higher when the correlation between the foreign index and the relevant exchange rate is:",
+      "choices": [
+        "Lower",
+        "Higher",
+        "Exactly zero, regardless of the option's other terms",
+        "Exactly +1, since this eliminates currency risk entirely"
+      ],
+      "answer": 0,
+      "explanation": "Lower correlation between the underlying index and the exchange rate increases the uncertainty and hedging cost the option seller faces, which results in a higher quanto option price -- consistent with the general rule that correlation options become more valuable as correlation falls."
+    },
+    {
+      "q": "Among common multi-asset correlation option strategies, which type of payoff is the exception where a LOWER correlation between the underlyings makes the option LESS valuable?",
+      "choices": [
+        "An option whose payoff is based on the minimum (worse-performing) of two asset prices",
+        "An exchange option with payoff max(0, S2 - S1)",
+        "A quanto call on a foreign equity index",
+        "An option on the maximum (better-performing) of two asset prices"
+      ],
+      "answer": 0,
+      "explanation": "For an option paying off based on the minimum of two asset prices, lower correlation increases the chance that at least one asset performs poorly, which reduces the option's value -- the opposite of the usual 'lower correlation, higher price' relationship."
+    },
+    {
+      "q": "A correlation swap buyer pays a fixed correlation rate of 0.25 on a notional of $2,000,000 for a basket of three assets. At maturity, the three pairwise correlations of the assets' log returns are 0.50, 0.30, and 0.10. The buyer's payoff at maturity is closest to:",
+      "choices": [
+        "$100,000",
+        "$50,000",
+        "$150,000",
+        "$200,000"
+      ],
+      "answer": 0,
+      "explanation": "Realized correlation = (0.50 + 0.30 + 0.10) / 3 = 0.30. Payoff = $2,000,000 x (0.30 - 0.25) = $100,000."
+    },
+    {
+      "q": "A two-asset trading book has $10 million in asset A (daily volatility 1.0%) and $5 million in asset B (daily volatility 2.5%). If the correlation between A and B increases from 0.2 to 0.8 with everything else held constant, the bank's 10-day VaR and required trading-book capital charge will:",
+      "choices": [
+        "Both increase",
+        "Both decrease",
+        "VaR increases but the capital charge stays the same",
+        "Both stay exactly the same, since VaR depends only on individual volatilities"
+      ],
+      "answer": 0,
+      "explanation": "Portfolio volatility under the variance-covariance method increases with the correlation between portfolio assets (since the covariance term in the portfolio variance formula increases). A higher 10-day VaR directly increases the required capital charge, which is set at three times the 10-day VaR."
+    },
+    {
+      "q": "Under Basel rules for the trading book, if a bank's 10-day 99% VaR is $2 million, the minimum required capital charge for that portfolio is:",
+      "choices": [
+        "$6 million",
+        "$2 million",
+        "$4 million",
+        "$20 million"
+      ],
+      "answer": 0,
+      "explanation": "The Basel Committee requires trading-book capital of at least three times the 10-day VaR: 3 x $2,000,000 = $6,000,000."
+    },
+    {
+      "q": "In May 2005, large hedge funds with long positions in CDO equity tranches and short positions in CDO mezzanine tranches suffered losses on both legs after Ford and General Motors were downgraded to junk status. What happened to the spreads on each leg?",
+      "choices": [
+        "The equity tranche spread widened (hurting the long position) while the mezzanine tranche spread narrowed (hurting the short position)",
+        "Both the equity and mezzanine tranche spreads widened, hurting only the short mezzanine position",
+        "The equity tranche spread narrowed while the mezzanine tranche spread widened, hurting only the long equity position",
+        "Both spreads remained unchanged, and losses were due solely to rising interest rates"
+      ],
+      "answer": 0,
+      "explanation": "The equity tranche spread increased sharply (a paper loss for the long equity position), while correlations within investment-grade CDOs declined, pushing the mezzanine tranche spread down (a loss for the short mezzanine position, since the spread the fund must now pay exceeds what it originally received)."
+    },
+    {
+      "q": "During the 2007-2009 financial crisis, average pairwise correlation among U.S. stocks moved approximately:",
+      "choices": [
+        "From about 27% pre-crisis to over 50% during the worst part of the crisis",
+        "From about 50% pre-crisis to about 27% during the crisis",
+        "From about 10% to about 15%, a relatively minor change",
+        "It stayed roughly constant at around 30% throughout the crisis"
+      ],
+      "answer": 0,
+      "explanation": "Studies found average pairwise stock correlation rose from roughly 27% before the crisis to over 50% during the worst part of the downturn (roughly August 2008 to March 2009), sharply reducing diversification benefits."
+    },
+    {
+      "q": "A bank makes two equal-sized loans of $3 million each to two different companies, each with a 4% individual default probability and LGD of 100%. If the default correlation between the two companies is 1.0, the expected loss under the worst-case scenario is closest to:",
+      "choices": [
+        "$240,000",
+        "$120,000",
+        "$9,600",
+        "$480,000"
+      ],
+      "answer": 0,
+      "explanation": "With a default correlation of 1.0, the joint default probability equals the individual default probability (4%), so the joint-default scenario behaves like a single $6 million loan: EL = 0.04 x $6,000,000 = $240,000."
+    },
+    {
+      "q": "Which statement about default correlation across and within industries is most accurate?",
+      "choices": [
+        "Default correlations tend to be higher within an industry than across industries, with the energy sector showing unusually low correlation with the broader economy",
+        "Default correlations are uniformly negative across all industries",
+        "Default correlations within an industry are always lower than default correlations across industries",
+        "The energy sector has the highest default correlation with the broader economy of any sector"
+      ],
+      "answer": 0,
+      "explanation": "Historical data shows default correlations tend to be positive across most sectors and higher within a given industry than across industries, since systematic factors dominate. The energy sector is a notable exception, showing little correlation with the broader economy and greater resilience during downturns."
+    },
+    {
+      "q": "According to the term structure of default probabilities discussed in this lesson, which of the following statements is correct?",
+      "choices": [
+        "For non-investment-grade bonds, the probability of default is higher in the near term than in later years, while for investment-grade bonds, default probability tends to increase gradually with time to maturity",
+        "For investment-grade bonds, the probability of default is highest in the immediate time horizon and declines thereafter",
+        "Default probabilities are identical across all rating categories and maturities",
+        "For non-investment-grade bonds, default probability increases steadily the longer the bond survives"
+      ],
+      "answer": 0,
+      "explanation": "Investment-grade bonds show a default term structure that rises gradually with maturity, since there is more time for adverse developments. Non-investment-grade (junk) bonds show the opposite pattern: default risk is concentrated in the near term, and if the issuer survives that period, its conditional default probability declines."
+    }
+  ]
+}

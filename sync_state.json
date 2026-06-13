@@ -46,5 +46,13 @@
     "title": "Messages from the Academic Literature on Risk Measurement for the Trading Book",
     "wiki": "wiki/market-risk/R6 - Messages from the Academic Literature on Risk Measurement for the Trading Book/",
     "quiz": "quiz/data/market-risk/lesson6.json"
+  },
+  "market-risk/R7_Correlation_Basics.pdf": {
+    "sha256": "ee2f417d1b26a0ae656591e411644d54a5bcfdc47992875da72c9c5c329dfe61",
+    "processed_at": "2026-06-13",
+    "lesson": 7,
+    "title": "Correlation Basics: Definitions, Applications, and Terminology",
+    "wiki": "wiki/market-risk/R7 - Correlation Basics - Definitions, Applications, and Terminology/",
+    "quiz": "quiz/data/market-risk/lesson7.json"
   }
 }

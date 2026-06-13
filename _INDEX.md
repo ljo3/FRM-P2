@@ -55,6 +55,14 @@ concept/model, an entity/people page where relevant, and a formulas page.
   - [[Unified vs Compartmentalized Risk Measurement]] (LO 6.d)
   - [[Top-Down and Bottom-Up Risk Aggregation]] (LO 6.e)
   - [[Leverage, Balance Sheet Management, and Procyclicality]] (LO 6.f)
+- Lesson 7: [[market-risk/R7 - Correlation Basics - Definitions, Applications, and Terminology/Summary|Correlation Basics: Definitions, Applications, and Terminology]]
+  - [[Financial Correlation Risk and Its Applications]] (LO 7.a)
+  - [[Correlation and the 2007-2009 Financial Crisis]] (LO 7.b)
+  - [[Correlation Swaps]] (LO 7.c)
+  - [[Correlation Risk and the VaR Capital Charge]] (LO 7.d)
+  - [[Correlation Risk, Market Risk, and Credit Risk]] (LO 7.e)
+  - [[Correlation Risk, Systemic Risk, and Concentration Risk]] (LO 7.f)
+  - [[Correlation in Multi-Asset Options]] (LO 7.a, trading focus)
 
 ## credit-risk — Credit Risk Measurement and Management
 

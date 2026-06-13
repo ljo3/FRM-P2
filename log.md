@@ -111,3 +111,21 @@ bottom. Each entry: date, source file, what was created.
   - Moved the source PDF to `raw/market-risk/processed/` and recorded its
     sha256 hash, lesson number, and output paths in `sync_state.json`.
 
+- Ingested `R7_Correlation_Basics.pdf` (Reading 7, lesson 7) from
+  `raw/market-risk/`:
+  - Wrote `wiki/market-risk/R7 - Correlation Basics - Definitions,
+    Applications, and Terminology/` with `Summary.md`, `Formulas.md`,
+    `_INDEX.md`, one page per learning outcome, and a supplementary page on
+    multi-asset options (`Financial Correlation Risk and Its
+    Applications.md`, `Correlation and the 2007-2009 Financial Crisis.md`,
+    `Correlation Swaps.md`, `Correlation Risk and the VaR Capital
+    Charge.md`, `Correlation Risk, Market Risk, and Credit Risk.md`,
+    `Correlation Risk, Systemic Risk, and Concentration Risk.md`,
+    `Correlation in Multi-Asset Options.md`).
+  - Generated `quiz/data/market-risk/lesson7.json` (15 flashcards, 15
+    questions); added it to `quiz/data/manifest.json` and
+    `wiki/market-risk/_INDEX.md`.
+  - Updated the root `_INDEX.md` under `market-risk` with a link to the
+    Summary page and each learning-outcome page.
+  - Moved the source PDF to `raw/market-risk/processed/` and recorded its
+    sha256 hash, lesson number, and output paths in `sync_state.json`.

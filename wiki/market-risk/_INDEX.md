@@ -14,3 +14,4 @@ updated: 2026-06-13
 - [R4 — Backtesting VaR](<R4 - Backtesting VaR/_INDEX.md>)
 - [R5 — VaR Mapping](<R5 - VaR Mapping/_INDEX.md>)
 - [R6 — Messages from the Academic Literature on Risk Measurement for the Trading Book](<R6 - Messages from the Academic Literature on Risk Measurement for the Trading Book/_INDEX.md>)
+- [R7 — Correlation Basics: Definitions, Applications, and Terminology](<R7 - Correlation Basics - Definitions, Applications, and Terminology/_INDEX.md>)
