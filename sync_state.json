@@ -22,5 +22,13 @@
     "title": "Parametric Approaches (II): Extreme Value",
     "wiki": "wiki/market-risk/R3 - Parametric Approaches (II) - Extreme Value/",
     "quiz": "quiz/data/market-risk/lesson3.json"
+  },
+  "market-risk/R4_Backtesting_VaR.pdf": {
+    "sha256": "65f222296743b59b1e9a0d6e090712ed141e144ade9e3d2f892da5050669ec5b",
+    "processed_at": "2026-06-13",
+    "lesson": 4,
+    "title": "Backtesting VaR",
+    "wiki": "wiki/market-risk/R4 - Backtesting VaR/",
+    "quiz": "quiz/data/market-risk/lesson4.json"
   }
 }

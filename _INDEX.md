@@ -35,6 +35,12 @@ concept/model, an entity/people page where relevant, and a formulas page.
   - [[Comparing GEV and POT Approaches]] (LO 3.d)
   - [[Generalized Pareto Distribution and Extreme VaR]] (LO 3.e)
   - [[Multivariate Extreme Value Theory]] (LO 3.f)
+- Lesson 4: [[market-risk/R4 - Backtesting VaR/Summary|Backtesting VaR]]
+  - [[Backtesting Fundamentals]] (LO 4.a, 4.b)
+  - [[Failure Rates and the Z-Score Test]] (LO 4.c)
+  - [[Type I and Type II Errors and the Kupiec Test]] (LO 4.d)
+  - [[Conditional Coverage Testing]] (LO 4.e)
+  - [[Basel Rules for Backtesting]] (LO 4.f)
 
 ## credit-risk — Credit Risk Measurement and Management
 

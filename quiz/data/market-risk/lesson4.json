@@ -1,0 +1,229 @@
+{
+  "topic": "market-risk",
+  "lesson": 4,
+  "title": "Backtesting VaR",
+  "flashcards": [
+    {
+      "front": "What is a \"backtesting exception\"?",
+      "back": "A day on which the portfolio's actual loss exceeds the loss predicted by the VaR model at its stated confidence level."
+    },
+    {
+      "front": "Under a correctly calibrated VaR model, what should the long-run failure rate N/T converge to?",
+      "back": "To p = 1 − c, the probability of an exception implied by the model's confidence level c."
+    },
+    {
+      "front": "Why does the assumption of a static portfolio complicate backtesting?",
+      "back": "VaR is computed assuming the current portfolio stays fixed over the horizon, but the real portfolio (and its P&L) changes continuously, so actual P&L reflects a different portfolio than the one the VaR estimate was based on."
+    },
+    {
+      "front": "Give some items, besides market-risk-factor moves, that show up in a bank's actual daily P&L but not in its VaR model.",
+      "back": "Trading commissions and fees, net interest income, bid-ask spread effects, and gains/losses from intraday trades opened and closed the same day."
+    },
+    {
+      "front": "What is the difference between \"actual\" and \"cleaned\" (hypothetical) returns in backtesting?",
+      "back": "Actual returns are the P&L the bank really reported, including fees, commissions, and intraday trading effects. Cleaned returns strip those out so the P&L reflects only mark-to-market moves on the static end-of-day portfolio."
+    },
+    {
+      "front": "Write the z-score test statistic for backtesting and its 95% critical value.",
+      "back": "z = (N − pT) / √(p(1−p)T); reject the hypothesis that the model is unbiased if |z| > 1.96."
+    },
+    {
+      "front": "In backtesting, what is a Type I error?",
+      "back": "Rejecting a VaR model that is actually correctly calibrated — a false alarm."
+    },
+    {
+      "front": "In backtesting, what is a Type II error?",
+      "back": "Failing to reject (i.e., accepting) a VaR model that is actually mis-calibrated."
+    },
+    {
+      "front": "What does Kupiec's LR_uc test, and what is its critical value?",
+      "back": "It tests \"unconditional coverage\" — whether the overall exception rate matches p — via a likelihood ratio statistic that is chi-squared(1) distributed under the null; reject if LR_uc > 3.84."
+    },
+    {
+      "front": "Why is backtesting a 99% VaR model statistically harder than backtesting a 95% VaR model with the same sample size?",
+      "back": "The 99% model has far fewer expected exceptions (e.g., 2.5 vs. 12.5 in a 250-day sample), leaving less data to distinguish a correct model from an incorrect one, so both Type I and Type II error rates stay relatively high."
+    },
+    {
+      "front": "What does conditional coverage testing add beyond unconditional coverage testing?",
+      "back": "It checks whether exceptions are serially independent (not clustered in time), not just whether the total exception count is right."
+    },
+    {
+      "front": "What does LR_ind test, and what is its critical value?",
+      "back": "Christoffersen's test of serial independence of exceptions; chi-squared(1) distributed under the null, so reject independence if LR_ind > 3.84."
+    },
+    {
+      "front": "How is the conditional coverage statistic LR_cc constructed, and what is its critical value?",
+      "back": "LR_cc = LR_uc + LR_ind, which is chi-squared(2) distributed under the joint null; reject the model if LR_cc > 5.99."
+    },
+    {
+      "front": "Under Basel rules, what are the exception-count boundaries for the green, yellow, and red zones over a 250-day window at 99% confidence?",
+      "back": "Green = 0–4 exceptions (multiplier k=3, no penalty); Yellow = 5–9 exceptions (k rises by 0.40–0.85, subject to supervisor discretion); Red = 10+ exceptions (k automatically rises by 1, to k+1=4)."
+    },
+    {
+      "front": "What are the four categories regulators use to explain yellow-zone exceptions, and which ones trigger a penalty?",
+      "back": "(1) Basic integrity of the model is lacking — penalty applies; (2) model accuracy needs improvement — penalty applies; (3) intraday trading activity — penalty considered; (4) bad luck / volatile markets — no penalty mandated."
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is a backtesting \"exception\"?",
+      "choices": [
+        "A day where the model's VaR forecast exceeds a regulatory cap",
+        "A day where the portfolio's actual loss exceeds the VaR prediction for that day",
+        "A day where trading volume exceeds its historical average",
+        "A day where the portfolio's value increases beyond expectations"
+      ],
+      "answer": 1,
+      "explanation": "An exception (or exceedance/breach) occurs when actual losses are larger than the loss predicted by the VaR model for that day."
+    },
+    {
+      "q": "For a VaR model with confidence level c that is correctly calibrated, what should the long-run failure rate N/T converge to?",
+      "choices": ["c", "1 − c", "1/c", "c squared"],
+      "answer": 1,
+      "explanation": "The probability of an exception is p = 1 − c, so the observed failure rate N/T should converge to p as the sample size T grows."
+    },
+    {
+      "q": "Which statement best describes why a static-portfolio assumption complicates backtesting?",
+      "choices": [
+        "VaR is calculated for the portfolio as it stands at one point in time and assumes it stays fixed, but the real portfolio changes continuously, so actual P&L reflects a different portfolio than the one VaR was based on",
+        "VaR models cannot be computed for portfolios that contain more than one asset",
+        "Static portfolios always have lower VaR than dynamic ones",
+        "Backtesting requires the portfolio to be liquidated before each test"
+      ],
+      "answer": 0,
+      "explanation": "VaR is a snapshot prediction for the current, fixed portfolio, but real portfolios are continuously traded, creating a mismatch between the prediction and the realized P&L."
+    },
+    {
+      "q": "In backtesting terminology, what is a \"cleaned\" (hypothetical) return series?",
+      "choices": [
+        "The P&L including all fees, commissions, and intraday trading gains",
+        "The P&L recalculated to reflect only mark-to-market changes on the static end-of-day portfolio, with fees, commissions, and intraday trading effects stripped out",
+        "The P&L reported directly by the trading desk without any adjustment",
+        "The loss figure predicted by the VaR model itself"
+      ],
+      "answer": 1,
+      "explanation": "Cleaned returns remove non-mark-to-market items (fees, commissions, intraday trading effects) so the series reflects only how the static end-of-day portfolio responded to market moves — directly comparable to what the VaR model is trying to predict."
+    },
+    {
+      "q": "A bank's one-day 95% VaR model is backtested over T = 250 days and produces N = 20 exceptions. What is the z-statistic, and what does it imply?",
+      "choices": [
+        "z ≈ 0.87; fail to reject — the model appears well-calibrated",
+        "z ≈ 1.45; fail to reject — the model appears well-calibrated",
+        "z ≈ 2.18; reject — the model appears to understate risk",
+        "z ≈ 3.50; reject — the model appears to overstate risk"
+      ],
+      "answer": 2,
+      "explanation": "p = 0.05, pT = 12.5, p(1−p)T = 11.875 so √(p(1−p)T) ≈ 3.446. z = (20 − 12.5)/3.446 ≈ 2.18 > 1.96, so the unbiasedness hypothesis is rejected — too many exceptions suggests the model understates risk."
+    },
+    {
+      "q": "In the context of VaR backtesting, a Type I error refers to:",
+      "choices": [
+        "Rejecting a VaR model that is actually correctly calibrated",
+        "Failing to reject a VaR model that is actually mis-calibrated",
+        "Using the wrong holding period in the VaR calculation",
+        "Reporting more exceptions than were actually observed"
+      ],
+      "answer": 0,
+      "explanation": "A Type I error is a false alarm: concluding a correctly calibrated model is bad, based on a sample that happened to show an unusually high (or low) exception count."
+    },
+    {
+      "q": "In the context of VaR backtesting, a Type II error refers to:",
+      "choices": [
+        "Rejecting a VaR model that is actually correctly calibrated",
+        "Failing to reject (i.e., accepting) a VaR model that is actually mis-calibrated",
+        "Choosing too high a VaR confidence level",
+        "Computing the failure rate incorrectly"
+      ],
+      "answer": 1,
+      "explanation": "A Type II error means an inaccurate model passes the backtest because its sample happened to produce a plausible-looking exception count."
+    },
+    {
+      "q": "The chi-squared(1) critical value used for Kupiec's LR_uc test (3.84) is numerically equal to 1.96 squared. Why?",
+      "choices": [
+        "Because a chi-squared(1) random variable is the square of a standard normal random variable, and 1.96 is the standard normal 95% critical value",
+        "Because both tests always use exactly the same sample size",
+        "Because LR_uc and the z-test are mathematically identical formulas",
+        "It is a coincidence with no statistical basis"
+      ],
+      "answer": 0,
+      "explanation": "A chi-squared distribution with 1 degree of freedom is, by definition, the distribution of the square of a standard normal variable, so the two tests' critical values are mathematically linked: 1.96² = 3.8416 ≈ 3.84."
+    },
+    {
+      "q": "A bank's one-day 99% VaR model is backtested over T = 250 days and produces N = 8 exceptions. Approximately what is LR_uc, and what is the conclusion at the 95% test confidence level?",
+      "choices": [
+        "LR_uc ≈ 0.03; fail to reject",
+        "LR_uc ≈ 1.50; fail to reject",
+        "LR_uc ≈ 3.84; borderline, inconclusive",
+        "LR_uc ≈ 7.73; reject — the model likely understates risk"
+      ],
+      "answer": 3,
+      "explanation": "With p = 0.01, T = 250, N = 8, evaluating LR_uc = −2 ln[(1−p)^(T−N) p^N / (1−N/T)^(T−N) (N/T)^N] gives approximately 7.73, which exceeds the chi-squared(1) critical value of 3.84, so the model is rejected — 8 exceptions is too many for a 99% model over 250 days."
+    },
+    {
+      "q": "Relative to Kupiec's unconditional coverage test, what additional question does Christoffersen's LR_ind statistic answer?",
+      "choices": [
+        "Whether the total number of exceptions matches the expected count",
+        "Whether exceptions cluster together in time (serial dependence) rather than occurring independently",
+        "Whether the VaR model used the correct confidence level",
+        "Whether the portfolio's composition changed during the testing window"
+      ],
+      "answer": 1,
+      "explanation": "LR_ind tests serial independence of the exception sequence — whether exceptions tend to follow other exceptions more (or less) often than chance would predict, which LR_uc cannot detect since it only looks at the total count."
+    },
+    {
+      "q": "How is the conditional coverage statistic LR_cc constructed, and what is its critical value at 95% confidence?",
+      "choices": [
+        "LR_cc = LR_uc × LR_ind; critical value 3.84",
+        "LR_cc = LR_uc + LR_ind; critical value 5.99 (chi-squared, 2 degrees of freedom)",
+        "LR_cc = LR_uc − LR_ind; critical value 1.96",
+        "LR_cc = LR_ind / LR_uc; critical value 0.05"
+      ],
+      "answer": 1,
+      "explanation": "LR_cc sums the unconditional coverage and independence statistics; since each is chi-squared(1) and they are independent under the joint null, their sum is chi-squared(2), with a 95% critical value of 5.99."
+    },
+    {
+      "q": "Under the Basel framework (99% VaR, 250-day window), a bank reports 7 exceptions. Which zone does this fall into?",
+      "choices": [
+        "Green zone — no penalty",
+        "Yellow zone — supervisor evaluates the cause of the exceptions",
+        "Red zone — automatic penalty",
+        "Outside the defined zones; the test is inconclusive"
+      ],
+      "answer": 1,
+      "explanation": "5–9 exceptions over 250 days at 99% confidence falls in the yellow zone, where the supervisor investigates the cause before deciding whether a penalty applies."
+    },
+    {
+      "q": "Under the same Basel framework, a bank reports 11 exceptions over 250 days. What happens?",
+      "choices": [
+        "Green zone — no action",
+        "Yellow zone — supervisor discretion applies",
+        "Red zone — the capital multiplier automatically increases by 1",
+        "The model automatically passes since more exceptions imply more conservative VaR"
+      ],
+      "answer": 2,
+      "explanation": "10 or more exceptions over 250 days places the bank in the red zone, where the multiplier add-on (k) automatically increases by 1, regardless of the underlying cause."
+    },
+    {
+      "q": "Which of the four yellow-zone cause categories does Basel's framework NOT require a penalty for?",
+      "choices": [
+        "Basic integrity of the model is lacking",
+        "Model accuracy needs improvement",
+        "Intraday trading activity caused the exceptions",
+        "Bad luck — unusually volatile market conditions"
+      ],
+      "answer": 3,
+      "explanation": "Bad luck / volatile markets is treated as a plausible outcome even for a correctly specified model, so Basel's framework does not mandate a penalty in this case, unlike the integrity, accuracy, and (to a lesser extent) intraday-trading categories."
+    },
+    {
+      "q": "Why might lowering the required VaR confidence level from 99% to 95% (paired with a larger capital multiplier) improve the statistical properties of the backtest?",
+      "choices": [
+        "It increases the expected number of exceptions (from about 2.5 to about 12.5 over 250 days), giving the test more power to distinguish correct from incorrect models and improving both Type I and Type II error rates",
+        "It removes the need for backtesting entirely",
+        "It guarantees zero exceptions regardless of model quality",
+        "It eliminates the chi-squared distribution requirement for LR_uc"
+      ],
+      "answer": 0,
+      "explanation": "A lower confidence level produces more expected exceptions for the same sample size, which gives the test more statistical power — both Type I and Type II error rates can be reduced relative to the 99%/250-day setup, where only 2.5 exceptions are expected."
+    }
+  ]
+}

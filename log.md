@@ -61,3 +61,18 @@ bottom. Each entry: date, source file, what was created.
   - Moved the source PDF to `raw/market-risk/processed/` and recorded its
     sha256 hash, lesson number, and output paths in `sync_state.json`.
 
+- Ingested `R4_Backtesting_VaR.pdf` (Reading 4, lesson 4) from
+  `raw/market-risk/`:
+  - Wrote `wiki/market-risk/R4 - Backtesting VaR/` with `Summary.md`,
+    `Formulas.md`, `_INDEX.md`, and one page per learning outcome
+    (`Backtesting Fundamentals.md`, `Failure Rates and the Z-Score Test.md`,
+    `Type I and Type II Errors and the Kupiec Test.md`, `Conditional
+    Coverage Testing.md`, `Basel Rules for Backtesting.md`).
+  - Generated `quiz/data/market-risk/lesson4.json` (15 flashcards, 15
+    questions); added it to `quiz/data/manifest.json` and
+    `wiki/market-risk/_INDEX.md`.
+  - Updated the root `_INDEX.md` under `market-risk` with a link to the
+    Summary page and each learning-outcome page.
+  - Moved the source PDF to `raw/market-risk/processed/` and recorded its
+    sha256 hash, lesson number, and output paths in `sync_state.json`.
+
