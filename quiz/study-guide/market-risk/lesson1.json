@@ -1,0 +1,99 @@
+{
+  "topic": "market-risk",
+  "lesson": 1,
+  "title": "Estimating Market Risk Measures: An Introduction and Overview",
+  "intro": {
+    "why": "Before you can manage market risk, you need a shared language for measuring it. This chapter builds that language from scratch: how to describe a gain or loss, how to summarize \"how bad could a bad day get\" (VaR), how to go further and ask \"how bad on average once it IS a bad day\" (expected shortfall), and how to generalize both into one flexible framework (coherent risk measures). It closes with two reality checks: how much to trust your risk estimate (standard errors), and whether the distributional assumptions behind it are even reasonable (QQ plots). Every later Market Risk reading — backtesting, volatility forecasting, portfolio VaR — assumes fluency with these ideas.",
+    "content": "<p>The six learning outcomes build on each other in a fairly linear chain:</p><ol><li><strong>Historical Simulation VaR</strong> — the simplest possible answer: let the data speak for itself.</li><li><strong>Parametric VaR</strong> — the alternative: assume a distribution shape, gain flexibility.</li><li><strong>Expected Shortfall</strong> — VaR tells you where the cliff edge is; ES tells you how far the drop is.</li><li><strong>Coherent Risk Measures</strong> — VaR and ES turn out to both be special cases of a more general \"weighted average of quantiles\" idea.</li><li><strong>Standard Errors</strong> — every estimate above comes with uncertainty; this quantifies it.</li><li><strong>QQ Plots</strong> — a visual check on whether the distributional assumption behind #2 is reasonable.</li></ol><p>Keep an eye on the throughline: <em>\"let the data decide\" vs \"assume a shape\"</em> is the central tension of this entire reading, and it resurfaces in the next reading on non-parametric approaches.</p>"
+  },
+  "los": [
+    {
+      "id": "1a",
+      "lo": "LO 1.a — Estimate VaR using a historical simulation approach",
+      "title": "Historical Simulation VaR",
+      "why": "This is the most direct possible answer to \"how much could I lose?\": rank your past outcomes from worst to best and read off the one that sits at your chosen tail boundary. It makes zero assumptions about the shape of the return distribution, which makes it both the simplest method in the toolkit and the baseline every other method in this and the next chapter either builds on or reacts against.",
+      "keyIdea": "Sort historical P/L from worst to best; the loss at the (α × n)-th position from the bottom is your VaR.",
+      "content": "<h4>P/L vs. returns: fixing the language</h4><p>Before estimating anything, pin down how a gain or loss is expressed. <strong>Profit/loss (P/L)</strong> is the dollar change in a position's value over one period, including any cash distributions received. <strong>Arithmetic return</strong> is the percentage version of that, assuming distributions are not reinvested — a poor approximation over long horizons. <strong>Geometric (continuously compounded) return</strong> is the log of the ratio of end-of-period to start-of-period value — it assumes continuous reinvestment, and because it is a logarithm the underlying price can never be driven below zero.</p><p>One convention to internalize: <strong>losses are reported as positive numbers</strong>. A \"VaR of $1.5 million\" describes a loss, even though the calculation may produce a negative number internally.</p><h4>The procedure</h4><p>Historical simulation makes <strong>no assumption about the shape of the return distribution</strong> — it just treats the empirical distribution of past outcomes as a stand-in for the future:</p><ol><li>Collect <em>n</em> historical P/L (or return) observations.</li><li>Order them from the largest loss to the largest gain.</li><li>Pick a significance level α (e.g. α = 5% for 95% confidence).</li><li>VaR is the loss sitting at roughly the (α × n)-th worst observation.</li></ol><div class='example'><strong>Worked example.</strong> A desk has 500 daily P/L observations and wants the 99% VaR (α = 1%). Then α × n = 5, so the 5th worst loss in the sorted data <em>is</em> the VaR estimate — no distributional assumption required.</div><h4>Why this matters, and its limits</h4><p>The appeal is freedom from distributional assumptions: skew and fat tails in the real data show up automatically. The cost is that it is <strong>backward-looking</strong> — it assumes the future will look like the sampled past, and a finite sample can only represent a limited set of confidence levels. Both of these limitations are exactly what the non-parametric reading addresses next.</p>",
+      "formula": "<div class='formula'><code>P/L_t = P_t + D_t − P_(t−1)</code><br><code>Arithmetic return: r_t = (P_t + D_t) / P_(t−1) − 1</code><br><code>Geometric return: R_t = ln((P_t + D_t) / P_(t−1))</code></div>",
+      "takeaways": [
+        "VaR is just the loss sitting at your chosen tail boundary once the data is sorted from worst to best.",
+        "No distributional assumption — the source of both its simplicity and its blind spots.",
+        "Losses are always reported as positive numbers, even when the underlying math produces a negative.",
+        "It is backward-looking: it assumes the future return-generating process resembles the sampled past."
+      ]
+    },
+    {
+      "id": "1b",
+      "lo": "LO 1.b — Estimate VaR using a parametric approach for both normal and lognormal return distributions",
+      "title": "Parametric VaR — Normal and Lognormal",
+      "why": "Historical simulation is limited to whatever confidence levels your sample happens to represent, and it can be noisy with a small or unusual sample. Parametric VaR trades the \"no assumptions\" purity of historical simulation for the ability to compute VaR at any confidence level, by assuming the P/L or return series follows a known distribution.",
+      "keyIdea": "Assume normal (or lognormal) returns, estimate the mean and standard deviation, and read VaR straight off the distribution formula.",
+      "content": "<h4>Normal VaR</h4><p>If P/L is normal with mean μ and standard deviation σ, VaR at significance level α is the mean shifted by a multiple of the standard deviation — that multiple being the standard normal critical value z_α (z = 1.65 for α = 5%, z = 2.33 for α = 1%).</p><div class='example'><strong>Worked example (P/L data).</strong> A portfolio's annual P/L is normal with mean profit $12m and standard deviation $8m.<br>VaR(5%) = −$12m + $8m × 1.65 = $1.2m<br>VaR(1%) = −$12m + $8m × 2.33 = $6.64m<br>The 99% figure is larger because guarding against a rarer, more extreme event requires a bigger cushion.</div><h4>Lognormal VaR</h4><p>A normal distribution allows negative values, which is awkward for asset prices. The <strong>lognormal distribution</strong> fixes this: if geometric returns are normal, the price level itself is lognormal. The resulting VaR formula uses an <strong>exponential</strong> of the shifted-mean term, because we are translating a statement about log-returns back into a statement about the portfolio's level.</p><div class='example'><strong>Worked example.</strong> A $500 portfolio has geometric returns that are normal with mean 6% and standard deviation 25%.<br>Lognormal VaR(5%) = $500 × (1 − e^(0.06 − 0.25×1.65)) ≈ $146.5<br>Lognormal VaR(1%) = $500 × (1 − e^(0.06 − 0.25×2.33)) ≈ $203.7</div><h4>When do they converge?</h4><p>Over short holding periods, geometric and arithmetic returns are numerically close, so normal VaR (from arithmetic returns) and lognormal VaR (from geometric returns) give similar dollar figures. The gap widens as the holding period — and the typical size of returns — grows.</p>",
+      "formula": "<div class='formula'><code>Normal VaR(α%) = −μ + σ × z_α</code><br><code>Lognormal VaR(α%) = P_(t−1) × (1 − e^(μ_R − σ_R × z_α))</code><br><code>z = 1.65 for α = 5%,  z = 2.33 for α = 1%</code></div>",
+      "takeaways": [
+        "VaR = −(mean) + (critical value z_α) × (standard deviation) — a bigger confidence level always means a bigger z and a bigger VaR.",
+        "Lognormal VaR keeps prices non-negative; the exponential term comes from translating log-returns back to price levels.",
+        "Normal and lognormal VaR converge over short holding periods and diverge as horizons lengthen.",
+        "The whole approach lives or dies on whether the assumed distribution actually fits — exactly what QQ plots (LO 1.f) check."
+      ]
+    },
+    {
+      "id": "1c",
+      "lo": "LO 1.c — Estimate the expected shortfall given profit and loss (P/L) or return data",
+      "title": "Expected Shortfall",
+      "why": "VaR tells you the threshold loss at a given confidence level, but two portfolios can share the exact same VaR while having very different tail risk — one might barely cross the line, the other might fall off a cliff. Expected shortfall looks inside the tail rather than at its edge, answering \"if things do go badly, how bad on average?\"",
+      "keyIdea": "ES = the average of several VaR figures computed at confidence levels stepping through the tail beyond your VaR threshold.",
+      "content": "<h4>How ES is built</h4><p>Take the tail region beyond the VaR threshold and slice it into <em>n − 1</em> equally-sized probability bands. Compute a VaR figure at the confidence level corresponding to each slice boundary, then ES is simply the <strong>average of those VaR figures</strong>.</p><div class='example'><strong>Worked example.</strong> For the 95% VaR tail (worst 5%) with n = 5 slices, you need n − 1 = 4 VaR figures at 96%, 97%, 98%, and 99% confidence. For a standard normal, the critical values are ≈ 1.7507, 1.8808, 2.0537, 2.3263 — averaging gives 2.003. The true ES for the normal's 5% tail (with infinitely many slices) is ≈ 2.063, so the 4-slice estimate is close but slightly low: a coarse slicing misses the most extreme part of the tail.</div><h4>Two patterns</h4><ul><li>Moving from the 96% to the 99% slice, each successive VaR figure is <strong>larger</strong> — the gaps between them grow as you go deeper into the tail, exactly what a thinning density predicts.</li><li>As <em>n</em> increases, the ES estimate <strong>converges</strong> toward the true tail average — with thousands of slices it becomes effectively exact.</li></ul><h4>Relationship to VaR</h4><p>ES is a refinement, not a competitor: it reuses the same building block (a VaR at a given confidence level), applied repeatedly across the tail and averaged, rather than reporting a single point at the tail's edge.</p>",
+      "formula": "<div class='formula'><code>ES(5%) ≈ average of VaR(96%), VaR(97%), VaR(98%), VaR(99%)</code><br><code>(n − 1 = 4 slices through the 5% tail; more slices → closer to the true ES)</code></div>",
+      "takeaways": [
+        "ES answers \"how bad on average, given that we are already in the tail\" — VaR cannot answer this.",
+        "Construction: slice the tail into n−1 pieces, compute a VaR at each slice boundary, average them.",
+        "More slices → the ES estimate converges to the true tail average.",
+        "Two portfolios can have identical VaR yet very different ES — ES is the sharper tail-risk lens."
+      ]
+    },
+    {
+      "id": "1d",
+      "lo": "LO 1.d — Estimate risk measures by estimating quantiles",
+      "title": "Coherent Risk Measures and Quantiles",
+      "why": "VaR and ES are both, underneath, just specific ways of combining quantiles of the loss distribution. Naming that pattern explicitly — \"a weighted average of quantiles\" — reveals VaR and ES as two points on a single spectrum, and opens up a whole family of risk measures tuned to a particular risk appetite.",
+      "keyIdea": "VaR ⊂ ES ⊂ coherent risk measures: each is a special case of the next, obtained by choosing a particular weighting scheme over quantiles.",
+      "content": "<h4>From one quantile to a weighted average</h4><ul><li><strong>VaR</strong> is literally one quantile of the loss distribution — the value separating tail from body at a chosen confidence level.</li><li><strong>ES</strong> is an average of several quantiles, but only the ones inside the tail, each weighted equally.</li><li>A <strong>coherent risk measure</strong> goes further: a weighted average of quantiles spanning the whole distribution, with weights reflecting the risk manager's own aversion to losses of different sizes. Where ES applies weight 1/(1−confidence) to every tail quantile and zero elsewhere, a general coherent measure can spread non-zero weight across non-tail quantiles too.</li></ul><h4>Constructing one</h4><ol><li>Divide the <strong>entire</strong> distribution into n − 1 equal probability slices (not just the tail).</li><li>Identify the quantile at each slice boundary — e.g. with n = 10, boundaries sit at the 10th, 20th, ..., 90th percentiles (for a standard normal: roughly −1.2816, −0.8416, ..., +1.2816).</li><li>Apply the chosen risk-aversion weighting function to each quantile.</li><li>Average the weighted quantiles.</li></ol><h4>Sensitivity to n</h4><p>A general coherent risk measure is <strong>more sensitive</strong> to the choice of n than ES is: increasing n pushes quantile boundaries further into both tails (not just one). As with ES, though, the estimate converges to the measure's true value as n grows — the sensitivity is about precision, not about larger n being \"more correct\" beyond convergence.</p>",
+      "takeaways": [
+        "VaR ⊂ ES ⊂ coherent risk measures — a chain of increasingly flexible quantile-weighting schemes.",
+        "The weighting function is where the risk manager's own risk aversion gets encoded.",
+        "Coherent measures slice the whole distribution, not just the tail — both tails matter as n grows.",
+        "Like ES, estimates converge to the true value as the number of slices n grows large."
+      ]
+    },
+    {
+      "id": "1e",
+      "lo": "LO 1.e — Evaluate estimators of risk measures by estimating their standard errors",
+      "title": "Standard Errors of Risk Measure Estimators",
+      "why": "A VaR (or ES, or any coherent risk measure) figure is an estimate from a sample, not a fact carved in stone — it has sampling uncertainty just like any other statistic. This LO is about quantifying that uncertainty so a risk number comes with a confidence interval, not false precision.",
+      "keyIdea": "se(q) = √(p(1−p)/n) / f(q) — combine the probability mass near your quantile, the sample size, and the density at that point into a standard error.",
+      "content": "<h4>Why precision matters</h4><p>An estimator that bounces around wildly from sample to sample (large standard error) is far less useful for decision-making than a stable one, even with the same expected value. Best practice: report the point estimate <strong>and</strong> its standard error <strong>and</strong> an implied confidence interval.</p><h4>Bin width and the density at the quantile</h4><p>Picture a histogram of the loss distribution. A quantile <em>q</em> sits at some point on it; draw a small bin of width <em>r</em> around it. The standard error depends on:</p><ul><li><strong>p</strong> — the probability mass inside that bin.</li><li><strong>f(q)</strong> — the density (height) at the quantile, recovered as p divided by the bin width.</li><li><strong>n</strong> — the sample size.</li></ul><div class='example'><strong>Worked example.</strong> 90% CI around the 5% VaR (the 95% quantile, z = 1.65) of a standard normal, bin width 0.1, n = 800. The bin spans [1.60, 1.70]; the probability mass inside is p ≈ 0.9554 − 0.9452 = 0.0102, so f(q) = 0.0102 / 0.1 = 0.102. Then se(q) = √(0.0102 × 0.9898 / 800) / 0.102 ≈ 0.0349. The 90% CI is 1.65 ± 1.65 × 0.0349 ≈ [1.59, 1.71].</div><h4>How the inputs move the standard error</h4><ul><li><strong>Larger n → smaller se</strong> — more data always tightens the interval.</li><li><strong>Wider bin r → smaller se</strong> — captures more probability mass around the quantile, making the estimate less sensitive to where individual observations fall.</li><li><strong>p closer to 0.5 → larger se</strong> — p(1−p) is maximized at p = 0.5, so quantiles near the median have larger standard errors than quantiles deep in a tail.</li></ul>",
+      "formula": "<div class='formula'><code>se(q) = √( p(1 − p) / n ) / f(q)</code><br><code>Confidence interval: [q + z_α·se(q)]  &gt;  VaR  &gt;  [q − z_α·se(q)]</code></div>",
+      "takeaways": [
+        "Every risk-measure estimate should come with a standard error and confidence interval — not just a point figure.",
+        "More data → tighter interval. Wider bins → smaller standard error (more stable, less precise location).",
+        "Quantiles near the median have larger standard errors than quantiles deep in a tail.",
+        "The same critical value z_α from the original VaR calculation is reused to build the confidence interval."
+      ]
+    },
+    {
+      "id": "1f",
+      "lo": "LO 1.f — Interpret quantile-quantile (QQ) plots to identify the characteristics of a distribution",
+      "title": "QQ Plots",
+      "why": "Parametric VaR (LO 1.b) is only as good as its distributional assumption. A QQ plot is the fast, visual gut-check: does the data actually look like the distribution you are assuming — especially out in the tails, which is exactly where VaR lives?",
+      "keyIdea": "Plot empirical quantiles against theoretical (e.g. normal) quantiles across a range of confidence levels. A straight 45° line means the assumption fits.",
+      "content": "<h4>How it is built</h4><p>For a range of confidence levels (e.g. every 10th percentile from 10% to 90%), plot the <strong>empirical</strong> quantile on one axis and the <strong>theoretical/reference</strong> quantile (e.g. standard normal) on the other. If the data were drawn exactly from the reference distribution, every point falls on the 45° line.</p><h4>Reading the plot</h4><ul><li><strong>Straight line ≈ good fit</strong> across the whole range of confidence levels.</li><li><strong>Center matches, tails diverge</strong> is a very common pattern — the distribution is symmetric (center lines up) but has tails that differ from the reference (fatter or thinner).</li></ul><div class='example'><strong>Worked example.</strong> Compare a standard normal reference to data actually drawn from a Student's t-distribution (symmetric but fat-tailed). Near the median, t-quantiles track the normal's closely. At the 95% level, the normal critical value is 1.65 while the t's is noticeably further out; at 97.5% (normal = 1.96) the gap widens further. The resulting plot hugs the 45° line near the center but bends away in both tails — the visual signature of fat tails.</div><h4>Why this matters for VaR</h4><p>The whole appeal of parametric VaR is computing it at any confidence level once you've assumed a distribution. The QQ plot is the natural first check on that assumption: if the plot bends away from the 45° line in the tail relevant to your VaR confidence level, the normal/lognormal VaR is likely <strong>biased</strong> — typically <strong>understating</strong> risk if the true tails are fatter than assumed.</p>",
+      "takeaways": [
+        "45° line = your distributional assumption is reasonable; bending away = it is not.",
+        "Center-matches-but-tails-diverge is the classic \"symmetric but fat/thin-tailed\" signature.",
+        "Fatter true tails than assumed → parametric VaR (LO 1.b) likely understates risk.",
+        "This is the sanity check you run before trusting a normal or lognormal VaR figure."
+      ]
+    }
+  ]
+}

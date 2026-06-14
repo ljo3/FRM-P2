@@ -1,0 +1,486 @@
+:root {
+  --bg: #0f1419;
+  --surface: #1a2230;
+  --surface-2: #232d3f;
+  --border: #2e3a4e;
+  --text: #e6edf3;
+  --text-dim: #9aa9bd;
+  --accent: #5aa9ff;
+  --accent-2: #7fd1b9;
+  --done: #4caf6e;
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#home-btn,
+.nav-link {
+  background: var(--surface);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+#home-btn:hover,
+.nav-link:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.app-layout {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* Sidebar */
+
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.sidebar-topic {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  margin: 0.5rem 0 0.5rem;
+}
+
+.sidebar-lesson {
+  margin-bottom: 1rem;
+}
+
+.sidebar-lesson-title {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.sidebar-lesson-title:hover {
+  background: var(--surface);
+}
+
+.sidebar-lesson-title.active {
+  background: var(--surface-2);
+  color: var(--accent);
+}
+
+.sidebar-steps {
+  list-style: none;
+  margin: 0.15rem 0 0;
+  padding: 0;
+}
+
+.sidebar-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  padding: 0.35rem 0.5rem 0.35rem 1.25rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.sidebar-step:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.sidebar-step.active {
+  background: var(--surface-2);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.sidebar-check {
+  flex-shrink: 0;
+  width: 1.1em;
+  text-align: center;
+}
+
+.sidebar-step.done .sidebar-check {
+  color: var(--done);
+}
+
+/* Main */
+
+.app-main {
+  flex: 1;
+  padding: 1.5rem 2rem 3rem;
+  overflow-y: auto;
+  max-width: 860px;
+}
+
+.view h2 {
+  margin-top: 0;
+}
+
+/* Home view */
+
+.home-intro {
+  color: var(--text-dim);
+  max-width: 640px;
+}
+
+.topic-section {
+  margin-top: 1.5rem;
+}
+
+.topic-section h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.lesson-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lesson-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.lesson-card-info h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.lesson-card-progress {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+.lesson-card-bar {
+  width: 160px;
+  height: 6px;
+  background: var(--surface-2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0.4rem;
+}
+
+.lesson-card-bar-fill {
+  height: 100%;
+  background: var(--accent-2);
+}
+
+.lesson-card-btn {
+  background: var(--accent);
+  color: #07131f;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.55rem 1.1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.lesson-card-btn:hover {
+  opacity: 0.9;
+}
+
+/* Step view */
+
+.progress-track {
+  height: 6px;
+  background: var(--surface-2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent-2);
+  width: 0%;
+  transition: width 0.2s;
+}
+
+.step-breadcrumb {
+  margin: 0 0 0.5rem;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+.step-badge {
+  display: inline-block;
+  background: var(--surface-2);
+  color: var(--accent-2);
+  border-radius: var(--radius);
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.why-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+
+.why-box h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+.why-box p {
+  margin: 0;
+}
+
+.key-idea {
+  font-style: italic;
+  color: var(--accent-2);
+  border-left: 3px solid var(--accent-2);
+  padding-left: 0.75rem;
+  margin: 1rem 0;
+}
+
+.step-content h4 {
+  margin: 1.25rem 0 0.5rem;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.step-content p,
+.step-content ul,
+.step-content ol {
+  margin: 0.5rem 0;
+}
+
+.step-content ul,
+.step-content ol {
+  padding-left: 1.4rem;
+}
+
+.step-content li {
+  margin-bottom: 0.35rem;
+}
+
+.step-content .example {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  margin: 0.75rem 0;
+  font-size: 0.95rem;
+}
+
+.step-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+  font-size: 0.9rem;
+}
+
+.step-content th,
+.step-content td {
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+}
+
+.step-content th {
+  background: var(--surface);
+  color: var(--text-dim);
+}
+
+.formula-wrap .formula {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  overflow-x: auto;
+}
+
+.formula-wrap code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  color: var(--accent-2);
+}
+
+.takeaways {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+}
+
+.takeaways h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.takeaways ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.takeaways li {
+  margin-bottom: 0.35rem;
+}
+
+.mark-done {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin: 0.5rem 0 1.5rem;
+}
+
+.mark-done input {
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+}
+
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+.step-nav button {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.step-nav button:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+
+.step-nav button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Footer */
+
+.app-footer {
+  border-top: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0;
+}
+
+.link-btn:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 720px) {
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-height: 240px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .app-main {
+    max-width: none;
+    padding: 1.25rem;
+  }
+}

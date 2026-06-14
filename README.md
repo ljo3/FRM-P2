@@ -7,6 +7,10 @@ LLM-maintained markdown wiki plus a static flashcard/quiz app.
   reading (`R<N> - <Chapter Title>/`). Start at [`_INDEX.md`](_INDEX.md).
 - `quiz/` — a static HTML/CSS/JS flashcard and quiz app with no build step,
   driven by `quiz/data/manifest.json`.
+- `quiz/study-guide/` — a linked subpage with a sequential "why this matters +
+  deep dive" walkthrough per learning outcome, driven by
+  `quiz/study-guide/manifest.json`. Reachable via the "Study Guide" link in
+  the quiz header.
 - `raw/` — gitignored source PDFs (private, never published).
 - `AGENTS.md` — the operating spec an AI agent follows to ingest new
   readings into `wiki/` and `quiz/data/`.
@@ -35,19 +39,20 @@ LLM-maintained markdown wiki plus a static flashcard/quiz app.
 
 ## Running the quiz app locally
 
-The quiz app is plain static files — serve `quiz/` with any static file
-server and open it in a browser:
+The quiz app (and the nested study guide) are plain static files — serve
+`quiz/` with any static file server and open it in a browser:
 
 ```bash
 cd quiz
 python3 -m http.server 8000
 # then open http://localhost:8000
+# the study guide is at http://localhost:8000/study-guide/
 ```
 
 ## Deploying to Cloudflare Pages
 
-The quiz app has no build step and uses only relative paths, so it deploys
-directly from the `quiz/` folder.
+The quiz app and the nested study guide have no build step and use only
+relative paths, so both deploy directly from the `quiz/` folder.
 
 ### Option A: Git integration (recommended)
 

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FRM Part 2 — Study Guide</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>FRM Part 2 Study Guide</h1>
+    <nav class="header-actions">
+      <a class="nav-link" href="../">Back to Quiz</a>
+      <button type="button" id="home-btn">Home</button>
+    </nav>
+  </header>
+
+  <div class="app-layout">
+    <nav class="sidebar" id="sidebar" aria-label="Lesson navigation"></nav>
+
+    <main class="app-main">
+
+      <section id="home-view" class="view"></section>
+
+      <section id="step-view" class="view" hidden>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <p class="step-breadcrumb" id="step-breadcrumb"></p>
+        <span class="step-badge" id="step-badge"></span>
+        <h2 id="step-title"></h2>
+
+        <div class="why-box">
+          <h3>Why this matters</h3>
+          <p id="step-why"></p>
+        </div>
+
+        <p class="key-idea" id="step-key-idea" hidden></p>
+
+        <div id="step-content" class="step-content"></div>
+
+        <div id="step-formula" class="formula-wrap" hidden></div>
+
+        <div class="takeaways" id="takeaways-section">
+          <h3>Key takeaways</h3>
+          <ul id="takeaways-list"></ul>
+        </div>
+
+        <label class="mark-done">
+          <input type="checkbox" id="mark-done-checkbox" />
+          Mark as understood
+        </label>
+
+        <div class="step-nav">
+          <button type="button" id="prev-btn">&larr; Previous</button>
+          <button type="button" id="next-btn">Next &rarr;</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="app-footer">
+    <p>
+      FRM Part 2 study guide &middot; local only, progress saved in this
+      browser &middot; <button type="button" id="reset-progress-btn" class="link-btn">reset progress</button>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

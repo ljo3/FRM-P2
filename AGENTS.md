@@ -18,24 +18,26 @@ wiki/                AI-written, paraphrased study pages.
                               reading number and the reading's title, e.g.
                               market-risk/R5 - Estimating Liquidity Risks/
       _INDEX.md      Folder index: lists every page in this reading's folder.
-quiz/                Static HTML/CSS/JS quiz app for Cloudflare Pages.
-  index.html
+quiz/                Static HTML/CSS/JS site deployed to Cloudflare Pages
+                     (build output directory = quiz/). Two linked apps:
+  index.html         Quiz/flashcard app (entry point).
   styles.css
   app.js
   data/              Generated quiz/flashcard JSON, mirrored by topic.
     manifest.json    Catalog of all lessons (the app reads this on load).
-study-guide/         Interactive local-only study guide (gitignored — never
-                     committed or deployed). Sequential "why this matters +
-                     deep dive" walkthrough per learning outcome, with
-                     progress tracked in browser localStorage.
-  index.html
-  styles.css
-  app.js
-  manifest.json      Catalog of topics/lessons, nested by topic (different
+  study-guide/       Interactive study guide subpage, linked from the quiz
+                     app's header nav ("Study Guide" / "Back to Quiz").
+                     Sequential "why this matters + deep dive" walkthrough
+                     per learning outcome, with progress tracked in browser
+                     localStorage.
+    index.html
+    styles.css
+    app.js
+    manifest.json    Catalog of topics/lessons, nested by topic (different
                      shape from quiz/data/manifest.json's flat per-topic
                      arrays — see INGEST step 5).
-  <TOPIC>/
-    lesson<N>.json   Per-LO content: { intro: {why, content}, los: [...] }.
+    <TOPIC>/
+      lesson<N>.json Per-LO content: { intro: {why, content}, los: [...] }.
 _INDEX.md            Master catalog of all wiki pages, grouped by topic.
 log.md               Append-only chronological record of every ingest.
 sync_state.json      Hash-tracked record of every source file ingested.
@@ -151,10 +153,9 @@ ingest new files).
    - Each `questions[].choices` array should have exactly 4 entries, with
      `answer` being the 0-based index of the correct one.
 
-4. **Generate study-guide content** at `study-guide/<TOPIC>/lesson<N>.json`.
-   This folder is gitignored and never published, but generate it for every
-   ingested reading anyway so the local study guide stays in sync with the
-   wiki/quiz. Schema:
+4. **Generate study-guide content** at `quiz/study-guide/<TOPIC>/lesson<N>.json`.
+   This is deployed alongside the quiz app, so generate it for every ingested
+   reading to keep the study guide in sync with the wiki/quiz. Schema:
    ```json
    {
      "topic": "<TOPIC>",
@@ -198,7 +199,7 @@ ingest new files).
      ```json
      { "lesson": <N>, "title": "<chapter title>", "file": "data/<TOPIC>/lesson<N>.json" }
      ```
-   - `study-guide/manifest.json` — add or update this topic's entry:
+   - `quiz/study-guide/manifest.json` — add or update this topic's entry:
      ```json
      {
        "<TOPIC>": {
@@ -243,7 +244,7 @@ ingest new files).
          "title": "<chapter title>",
          "wiki": "wiki/<TOPIC>/R<N> - <Chapter Title>/",
          "quiz": "quiz/data/<TOPIC>/lesson<N>.json",
-         "study_guide": "study-guide/<TOPIC>/lesson<N>.json"
+         "study_guide": "quiz/study-guide/<TOPIC>/lesson<N>.json"
        }
      }
      ```
@@ -272,16 +273,19 @@ fetches the referenced lesson JSON files on demand.
   choice, immediate feedback with explanation, running score, end-of-quiz
   summary.
 - State lives in memory only (no localStorage dependency).
+- The header's "Study Guide" link opens `study-guide/` (see below); the study
+  guide's header has a matching "Back to Quiz" link.
 
 After adding or editing anything under `quiz/data/`, no build step is
 required — the app reads the JSON directly at runtime.
 
 ## Study guide app
 
-`study-guide/index.html` + `study-guide/styles.css` + `study-guide/app.js`
-form a second static site, local-only and gitignored (never committed or
-deployed). It reads `study-guide/manifest.json`, then fetches each topic's
-`lesson<N>.json` files on demand.
+`quiz/study-guide/index.html` + `quiz/study-guide/styles.css` +
+`quiz/study-guide/app.js` form a second static site, deployed as a subpage of
+the quiz app (linked via the header nav on both pages). It reads
+`quiz/study-guide/manifest.json`, then fetches each topic's `lesson<N>.json`
+files on demand.
 
 - Each reading contributes one "Overview" step (from `intro`) followed by one
   step per learning outcome (from `los[]`), flattened into a single per-topic
@@ -293,6 +297,5 @@ deployed). It reads `study-guide/manifest.json`, then fetches each topic's
   `localStorage` (key `frm-study-guide-progress`), shown via checkmarks in
   the sidebar and progress bars on the home view. A footer link resets all
   progress.
-- After adding or editing anything under `study-guide/`, no build step is
-  required — open `study-guide/index.html` directly or serve the folder with
-  any static file server.
+- After adding or editing anything under `quiz/study-guide/`, no build step
+  is required — the app reads the JSON directly at runtime.
