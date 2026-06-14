@@ -297,5 +297,18 @@ files on demand.
   `localStorage` (key `frm-study-guide-progress`), shown via checkmarks in
   the sidebar and progress bars on the home view. A footer link resets all
   progress.
+- `quiz/study-guide/progress.json` is a repo-tracked backup of completed
+  steps, merged into `localStorage` on load (union — entries marked `true`
+  here are always treated as done, even if the browser's storage was wiped,
+  e.g. by Cloudflare Access re-auth redirects or a browser/device switch).
+  Format: a flat map of `"<topic>/<lesson>/<lo-id>": true`, e.g.
+  `"market-risk/5/1a": true` (use `"intro"` as the `<lo-id>` for a lesson's
+  Overview step).
+- **PROGRESS workflow**: when the user reports finishing one or more steps
+  (e.g. "mark LO 5.1a as done", "I finished lesson 6"), add the
+  corresponding key(s) to `quiz/study-guide/progress.json` (look up the
+  topic/lesson/LO ids from `quiz/study-guide/<TOPIC>/lesson<N>.json` —
+  `los[].id`, plus `"intro"` for the overview), keep the file sorted/valid
+  JSON, and commit/push the change so it survives the next deploy.
 - After adding or editing anything under `quiz/study-guide/`, no build step
   is required — the app reads the JSON directly at runtime.

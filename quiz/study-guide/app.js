@@ -22,6 +22,29 @@
     localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
   }
 
+  // Repo-tracked backup of completed steps (quiz/study-guide/progress.json).
+  // Browser localStorage can get wiped (private browsing, Cloudflare Access
+  // re-auth redirects, switching devices, etc.); this file lets completed
+  // steps survive that by being merged back in on load.
+  async function loadBackupProgress() {
+    try {
+      const res = await fetch("progress.json");
+      if (!res.ok) return;
+      const backup = await res.json();
+      let changed = false;
+      for (const [key, done] of Object.entries(backup)) {
+        if (done && !progress[key]) {
+          progress[key] = true;
+          changed = true;
+        }
+      }
+      if (changed) saveProgress();
+    } catch {
+      // No backup file, or fetch failed (e.g. local file:// without a
+      // server) — fall back to localStorage only.
+    }
+  }
+
   function stepKey(step) {
     return `${step.topic}/${step.lesson}/${step.id}`;
   }
@@ -327,6 +350,7 @@
     loadProgress();
     await loadManifest();
     await loadAllLessons();
+    await loadBackupProgress();
     renderSidebar();
     renderHome();
 
